@@ -321,6 +321,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
+
     A[🎯 User Request<br/>Generate tests for module.py] --> B[📊 Git Analysis<br/>Detect changes since last commit]
     B --> C[🔍 RAG Retrieval<br/>Find relevant code context]
     C --> D[🌳 AST Analysis<br/>Parse code structure and dependencies]
@@ -334,10 +335,6 @@ flowchart TD
     K --> L[📈 Observability<br/>Log metrics, traces, events]
     L --> M[📤 Results Return<br/>Display to user with metrics]
 
-    style A fill:#e1f5fe
-    style M fill:#e8f5e8
-    style F fill:#ffebee
-    style J fill:#fff3e0
 ```
 
 #### RAG Pipeline
@@ -353,9 +350,6 @@ flowchart LR
     G --> H[📊 Context Assembly<br/>Build comprehensive context]
     H --> I[🤖 LLM Input<br/>Provide context for generation]
 
-    style D fill:#e3f2fd
-    style G fill:#fff3e0
-    style I fill:#f3e5f5
 ```
 
 #### Docker Sandbox Execution
@@ -370,10 +364,6 @@ flowchart TD
     F --> G[🔒 Cleanup<br/>Remove container and temp files]
     G --> H[📈 Metrics Recording<br/>Log execution metrics]
     H --> I[📤 Results Return<br/>Return to orchestrator]
-
-    style B fill:#e8f5e8
-    style E fill:#fff3e0
-    style G fill:#ffebee
 ```
 
 ---
@@ -423,9 +413,7 @@ graph TB
     RAGTools --> Embeddings
     All --> Guardrails
 
-    style Planner fill:#e3f2fd
-    style Coder fill:#f3e5f5
-    style Critic fill:#fff3e0
+
 ```
 
 ### Agent Roles & Responsibilities
@@ -566,15 +554,6 @@ graph TD
 
     Layer1 --> Layer2 --> Layer3 --> Layer4 --> Layer5 --> Layer6 --> Layer7 --> Layer8 --> Layer9
 
-    style Layer1 fill:#e3f2fd
-    style Layer2 fill:#ffebee
-    style Layer3 fill:#fff3e0
-    style Layer4 fill:#e8f5e8
-    style Layer5 fill:#fce4ec
-    style Layer6 fill:#f3e5f5
-    style Layer7 fill:#e0f2f1
-    style Layer8 fill:#fff8e1
-    style Layer9 fill:#f1f8e9
 ```
 
 ### Threat Model
@@ -659,10 +638,6 @@ graph TB
     Traces --> Debugging
     Alerts --> Reliability
 
-    style Logs fill:#e3f2fd
-    style Metrics fill:#fff3e0
-    style Traces fill:#f3e5f5
-    style Alerts fill:#ffebee
 ```
 
 ### Metrics Collection
@@ -715,8 +690,6 @@ graph LR
     G --> H[👨‍⚖️ Quality Review<br/>span_789yza012]
     H --> I[📊 Results Assembly<br/>span_345bcd678]
 
-    style A fill:#e1f5fe
-    style I fill:#e8f5e8
 ```
 
 **Trace Context Propagation**:
@@ -839,8 +812,6 @@ graph TB
     Goals --> Excellent
     Efficiency --> Excellent
 
-    style Quality fill:#e3f2fd
-    style Goals fill:#fff3e0
 ```
 
 ### Evaluation Dimensions
@@ -1041,9 +1012,7 @@ flowchart TD
     G --> H[✅ Merge<br/>Main branch integration]
     H --> I[🚀 Deployment<br/>CI/CD pipeline]
 
-    style A fill:#e3f2fd
-    style H fill:#e8f5e8
-    style E fill:#fff3e0
+
 ```
 
 ### Deployment Architecture
