@@ -1,0 +1,47 @@
+# Core AI/ML Dependencies
+ollama==0.4.4
+langgraph==0.2.45
+langchain==0.3.13
+langchain-community==0.3.13
+langchain-ollama==0.2.0
+langchain-openai==0.2.14
+langchain-google-genai==2.0.8
+openai==1.58.1
+google-generativeai==0.8.3
+
+# Vector Store & Embeddings
+chromadb==0.5.23
+
+# Git Integration
+gitpython==3.1.43
+
+# Testing Framework
+pytest==8.3.4
+pytest-cov==6.0.0
+pytest-mock==3.14.0
+pytest-timeout==2.3.1
+
+# Sandbox & Security
+docker==7.1.0
+
+# Code Quality
+black==24.10.0
+flake8==7.1.1
+mypy==1.13.0
+pylint==3.3.2
+isort==5.13.2
+types-requests==2.31.0.20240125
+
+# HTTP & API
+httpx==0.28.1
+requests==2.31.0
+
+# Data Processing
+pydantic==2.12.3
+pydantic-settings==2.7.0
+python-dotenv==1.0.1
+
+# Utilities
+rich==14.2.0
+tenacity==9.1.2
+
