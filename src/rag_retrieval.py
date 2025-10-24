@@ -75,8 +75,9 @@ class RAGRetriever:
             source_dir: Source code directory
         """
         self.embedding_store = embedding_store or CodeEmbeddingStore()
-        self.git_integration = git_integration or GitIntegration()
-        self.source_dir = source_dir or settings.source_code_dir
+        # Always use settings.source_code_dir if not explicitly provided
+        self.source_dir = source_dir if source_dir is not None else settings.source_code_dir
+        self.git_integration = git_integration or GitIntegration(repo_path=self.source_dir)
         
         console.print("[green]✓[/green] RAG Retriever initialized")
     

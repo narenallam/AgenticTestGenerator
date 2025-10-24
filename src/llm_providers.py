@@ -146,7 +146,15 @@ class OllamaProvider(BaseLLMProvider):
                     'completion_tokens': response.get('eval_count', 0),
                     'total_tokens': response.get('prompt_eval_count', 0) + response.get('eval_count', 0)
                 },
-                metadata=response
+                metadata={
+                    'model': response.get('model', self.model_name),
+                    'total_duration': response.get('total_duration'),
+                    'load_duration': response.get('load_duration'),
+                    'prompt_eval_duration': response.get('prompt_eval_duration'),
+                    'eval_duration': response.get('eval_duration'),
+                    'prompt_eval_count': response.get('prompt_eval_count'),
+                    'eval_count': response.get('eval_count')
+                }
             )
         
         except Exception as e:

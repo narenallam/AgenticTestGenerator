@@ -91,13 +91,27 @@ class GitIntegration:
             >>> status = git.get_status()
             >>> print(f"Branch: {status.branch}, Dirty: {status.is_dirty}")
         """
+        try:
+            # Try to get staged files (requires at least one commit)
+            staged_files = [item.a_path for item in self.repo.index.diff("HEAD")]
+            commit_hash = self.repo.head.commit.hexsha
+        except Exception:
+            # Repository has no commits yet
+            staged_files = []
+            commit_hash = "0" * 40  # Git's null SHA
+        
+        try:
+            branch_name = self.repo.active_branch.name
+        except Exception:
+            branch_name = "main"  # Default if no branch
+        
         return GitStatus(
             is_dirty=self.repo.is_dirty(untracked_files=True),
             untracked_files=self.repo.untracked_files,
             modified_files=[item.a_path for item in self.repo.index.diff(None)],
-            staged_files=[item.a_path for item in self.repo.index.diff("HEAD")],
-            branch=self.repo.active_branch.name,
-            commit_hash=self.repo.head.commit.hexsha
+            staged_files=staged_files,
+            branch=branch_name,
+            commit_hash=commit_hash
         )
     
     def get_changed_files_since_last_commit(
@@ -124,10 +138,14 @@ class GitIntegration:
         
         changes: List[FileChange] = []
         
-        # Get staged changes
-        for diff_item in self.repo.index.diff("HEAD"):
-            if self._should_include_file(diff_item.a_path, file_extensions):
-                changes.append(self._create_file_change(diff_item, staged=True))
+        try:
+            # Get staged changes (requires at least one commit)
+            for diff_item in self.repo.index.diff("HEAD"):
+                if self._should_include_file(diff_item.a_path, file_extensions):
+                    changes.append(self._create_file_change(diff_item, staged=True))
+        except Exception:
+            # Repository has no commits yet - all files are new
+            pass
         
         # Get unstaged changes
         for diff_item in self.repo.index.diff(None):

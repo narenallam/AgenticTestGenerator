@@ -1,16 +1,15 @@
 # 🚀 Agentic Unit Test Generator
 
-> **Enterprise-grade automated test generation using AI agents, RAG, and multi-provider LLM support**
+> **Enterprise-grade automated test generation using AI agents, RAG, LangChain 1.0, and intelligent tracking**
 
 <div align="center">
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg?style=flat-square&logo=python)](https://www.python.org/downloads/)
+[![LangChain 1.0](https://img.shields.io/badge/LangChain-1.0-green.svg?style=flat-square)](https://docs.langchain.com)
+[![LangGraph 1.0](https://img.shields.io/badge/LangGraph-1.0-blue.svg?style=flat-square)](https://docs.langchain.com/langgraph)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
-[![Docker](https://img.shields.io/badge/Docker-Ready-blue?style=flat-square&logo=docker)](https://www.docker.com/)
-[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-green?style=flat-square&logo=github-actions)](https://github.com/features/actions)
 
-**🎯 90%+ Coverage** | **🛡️ 95% Security** | **📊 Enterprise Evals** | **🔭 Full Observability**
+**🎯 Function-Level Tracking** | **🛡️ Enterprise Security** | **🚀 SQLite-Backed** | **🔭 Full Observability**
 
 </div>
 
@@ -20,229 +19,110 @@
 
 - [🎯 Overview](#-overview)
 - [✨ Key Features](#-key-features)
-- [🚀 Quick Start](#-quick-start)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [First Run](#first-run)
 - [🏗️ Architecture](#️-architecture)
-  - [System Overview](#system-overview)
-  - [Agentic Architecture](#agentic-architecture)
-  - [Security Model](#security-model)
-  - [Observability](#observability)
-  - [Evaluation System](#evaluation-system)
-- [🔧 Usage Guide](#-usage-guide)
-  - [Basic Usage](#basic-usage)
-  - [Advanced Configuration](#advanced-configuration)
-  - [CI/CD Integration](#cicd-integration)
-  - [Monitoring & Alerting](#monitoring--alerting)
-  - [Troubleshooting](#troubleshooting)
-- [📚 Examples](#-examples)
+- [🚀 Quick Start](#-quick-start)
+- [📖 Make Commands Reference](#-make-commands-reference)
+- [🔧 Advanced Techniques](#-advanced-techniques)
+- [📊 Observability & Monitoring](#-observability--monitoring)
+- [🛡️ Security & Guardrails](#️-security--guardrails)
+- [🤖 LLM Providers](#-llm-providers)
+- [🧪 Evaluation System](#-evaluation-system)
+- [📚 Technical Deep Dive](#-technical-deep-dive)
+- [🔍 Troubleshooting](#-troubleshooting)
 - [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
 
 ---
 
 ## 🎯 Overview
 
-The **Agentic Unit Test Generator** is a sophisticated AI-powered testing platform that leverages multiple AI agents to generate high-quality unit tests across multiple programming languages. Built on modern AI architectures, it achieves **90%+ test coverage** and **90%+ pass rates** while maintaining enterprise-grade security and observability.
+The **Agentic Unit Test Generator** is a sophisticated AI-powered testing platform that leverages multiple AI agents, RAG (Retrieval Augmented Generation), and intelligent function-level tracking to generate high-quality unit tests automatically.
 
-### 🎯 Mission Statement
+### 🎯 What Makes This Unique?
 
-> "Generate comprehensive, production-ready unit tests that achieve 90%+ code coverage and 90%+ pass rates across Python, Java, JavaScript, and TypeScript, while maintaining enterprise security and providing full operational visibility."
+1. **Function-Level Tracking**: SQLite database tracks every function and its tests
+2. **Intelligent Change Detection**: SHA256 hashing detects real code changes
+3. **Auto-Sync**: First run automatically scans and populates the database
+4. **Hybrid Search**: Combines exact symbol lookup, semantic search, and keyword matching
+5. **Context Assembly**: Pre-gathers 9 types of context before LLM calls
+6. **Single Source of Truth**: Unified SQLite database (no JSON files)
+7. **LangChain 1.0**: Built on latest stable LangChain/LangGraph architecture
 
-### 📊 Key Metrics
+### 📊 Current State (After Consolidation)
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| **Test Coverage** | ≥90% | ✅ Achieved |
-| **Pass Rate** | ≥90% | ✅ Achieved |
-| **Security Coverage** | ≥95% | ✅ Achieved |
-| **Multi-Language Support** | 4 Languages | ✅ Complete |
-| **Framework Support** | 8+ Frameworks | ✅ Complete |
-| **Observability** | Full Stack | ✅ Complete |
-| **Evaluation Coverage** | 360° | ✅ Complete |
+| Component | Status | Details |
+|-----------|--------|---------|
+| **Tracking System** | ✅ Unified | Single SQLite database only |
+| **Code Reduction** | ✅ Complete | -528 lines of legacy code removed |
+| **Data Redundancy** | ✅ Eliminated | 67% less overhead |
+| **LangChain Version** | ✅ 1.0 | Latest stable release |
+| **Function Tracking** | ✅ Active | AST-based per-function coverage |
+| **Symbol Index** | ✅ Active | O(1) exact lookups |
+| **Hybrid Search** | ✅ Active | 3-way search with reranking |
 
 ---
 
 ## ✨ Key Features
 
-### 🤖 **Intelligent Test Generation**
-- **Agentic Architecture**: Multi-agent system with Planner, Coder, and Critic agents
-- **LangGraph Orchestration**: Dynamic tool selection and workflow execution
-- **Multi-Iteration Refinement**: Continuous improvement until quality targets met
-- **Coverage-Driven**: AST/CFG analysis for targeted test generation
+### 🧠 **Intelligent Test Generation**
+
+#### Function-Level Tracking (NEW!)
+- **SQLite Database**: Persistent tracking of every function
+- **AST Parsing**: Extracts functions from source code
+- **SHA256 Hashing**: Detects actual code changes (not just file mtime)
+- **Auto-Sync**: First run scans entire codebase and existing tests
+- **Coverage Metrics**: Per-function, per-file, and overall coverage
+
+#### Context Assembly (NEW!)
+Pre-gathers **9 types of context** before every LLM call:
+1. **Target Code**: The function being tested
+2. **Related Functions**: Semantically similar code
+3. **Dependencies**: Direct imports and used modules
+4. **Callers**: Functions that call this function
+5. **Callees**: Functions called by this function
+6. **Usage Examples**: Real usage patterns from codebase
+7. **Git History**: Recent changes and commits
+8. **Existing Tests**: Current test coverage
+9. **Metadata**: File info, complexity, lines of code
+
+#### Hybrid Search (NEW!)
+Combines three search strategies:
+- **Exact Search**: Symbol index for O(1) function/class lookups
+- **Semantic Search**: ChromaDB embeddings for meaning-based retrieval
+- **Keyword Search**: Basic string matching for literals
+- **Reranking**: Cross-encoder model ranks final results
+
+#### Smart Indexing
+- **Incremental**: Only re-indexes changed files (hash-based)
+- **Dual Indexing**: Both embeddings and symbols
+- **Metadata Tracking**: Persistent index state in database
 
 ### 🌐 **Multi-Language & Framework Support**
 - **Python**: pytest, unittest
-- **Java**: JUnit, TestNG
-- **JavaScript**: Jest, Mocha, Jasmine
-- **TypeScript**: Jest with full TS support
-- **Framework Auto-Detection**: Automatic recognition and appropriate test generation
+- **Java**: JUnit, TestNG *(in progress)*
+- **JavaScript**: Jest, Mocha, Jasmine *(in progress)*
+- **TypeScript**: Jest with full TS support *(in progress)*
 
 ### 🔐 **Enterprise Security (95% Coverage)**
 - **9-Layer Guardrails**: Comprehensive security model
 - **PII Detection & Redaction**: 7 PII types automatically detected
 - **Prompt Injection Prevention**: 12 injection patterns blocked
 - **File Boundary Enforcement**: Strict access controls
-- **Determinism Validation**: No flaky tests allowed
-- **Sandbox Execution**: Docker-based isolated test running
+- **Budget Tracking**: Token/cost/time limits
+- **Constitutional AI**: Self-verification principles
 
-### 📊 **Enterprise Observability**
-- **Structured Logging**: Loguru with console, file, and database sinks
-- **Prometheus Metrics**: 50+ metrics tracked (latency, coverage, errors)
-- **Distributed Tracing**: Request flow tracking across agents
-- **Real-Time Monitoring**: Live dashboards and alerting
-- **Migration-Ready**: Zero-code migration to Prometheus/Grafana
-
-### 🧪 **Comprehensive Evaluation**
-- **360° Assessment**: Test quality, agent performance, safety, efficiency
-- **Goal Tracking**: Explicit 90/90 achievement monitoring
-- **Regression Detection**: Automated quality degradation detection
-- **Multi-Format Reports**: Console, Markdown, JSON outputs
+### 📊 **Full Observability**
+- **Structured Logging**: Loguru with console, file, database sinks
+- **Prometheus Metrics**: 50+ time-series metrics
+- **Distributed Tracing**: Request flow tracking
+- **Real-Time Dashboard**: Live monitoring console
+- **Component Tracking**: Detailed per-component logging
 
 ### 🚀 **Production Ready**
-- **Docker Integration**: Secure sandbox execution
+- **Docker Sandbox**: Secure isolated test execution
 - **Git Integration**: Change tracking and delta analysis
-- **CI/CD Ready**: GitHub Actions compatible
+- **CI/CD Ready**: GitHub Actions / GitLab CI compatible
 - **Type Safety**: 100% Pydantic v2 coverage
 - **Code Quality**: Black, Flake8, MyPy enforced
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- **Python 3.11+** (required for modern type hints and performance)
-- **Docker** (recommended for secure sandbox execution)
-- **Git** (for change tracking and version control)
-- **Ollama** (for local LLM - optional, defaults to local)
-
-#### Optional (for full functionality)
-- **Node.js** (for JavaScript/TypeScript test execution)
-- **Java** (for Java test execution)
-- **PostgreSQL** (for advanced artifact storage)
-
-### Installation
-
-#### Option 1: Using uv (Recommended - 10x Faster!)
-
-```bash
-# Install uv (fastest Python package manager)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Clone repository
-git clone <your-repo-url>
-cd AgenticTestGenerator
-
-# Complete setup (installs all dependencies, sets up virtual environment)
-make dev-setup
-
-# Activate environment
-source .venv/bin/activate
-```
-
-#### Option 2: Using pip
-
-```bash
-# Clone repository
-git clone <your-repo-url>
-cd AgenticTestGenerator
-
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Optional: Install development tools
-pip install -r requirements-dev.txt
-```
-
-### Configuration
-
-#### Environment Variables
-
-Create `.env` file (copy from `.env.example`):
-
-```bash
-# LLM Provider Configuration
-LLM_PROVIDER=ollama                    # ollama, openai, gemini
-OLLAMA_MODEL=qwen3-coder:30b          # Default: qwen3-coder:30b
-OPENAI_API_KEY=your_key_here          # Required if using OpenAI
-GEMINI_API_KEY=your_key_here          # Required if using Gemini
-
-# Security & Guardrails
-GUARDRAILS_ENABLED=true               # Enable comprehensive security
-BUDGET_DAILY_TOKENS=1000000          # Daily token limit
-BUDGET_DAILY_COST=50.00              # Daily cost limit
-
-# Observability
-OBSERVABILITY_ENABLED=true            # Enable logging, metrics, tracing
-PROMETHEUS_PORT=9090                  # Metrics endpoint port
-
-# Sandbox Configuration
-DOCKER_ENABLED=true                   # Enable Docker sandbox
-DOCKER_TIMEOUT=60                     # Test execution timeout (seconds)
-
-# Database Configuration
-CHROMA_DB_PATH=./data/chromadb         # Vector database path
-SQLITE_DB_PATH=./data/artifacts.db    # Artifact storage path
-```
-
-#### LLM Provider Setup
-
-**Ollama (Default - Free, Local)**
-```bash
-# Pull required models
-ollama pull qwen3-coder:30b
-ollama pull qwen3-embedding:8b
-ollama pull dengcao/Qwen3-Reranker-8B:Q8_0
-```
-
-**OpenAI (Paid, Cloud)**
-```bash
-# Set API key in .env
-echo "OPENAI_API_KEY=your_key_here" >> .env
-```
-
-**Google Gemini (Paid, Cloud)**
-```bash
-# Set API key in .env
-echo "GEMINI_API_KEY=your_key_here" >> .env
-```
-
-### First Run
-
-```bash
-# 1. Initialize the system (creates embeddings, datasets, etc.)
-make init
-
-# 2. Generate tests for a simple function
-python examples/simple_example.py
-
-# 3. Check system status
-python main.py status
-
-# 4. View observability dashboard
-python -m src.observability.monitor --interval 10
-
-# 5. Run comprehensive evaluation
-python -m src.evals.runner --setup
-python -m src.evals.runner --dataset mixed
-```
-
-**Expected Output:**
-```
-✅ Test generation complete!
-   Generated: 12 tests
-   Coverage: 92.3%
-   Pass Rate: 94.7%
-   Framework: pytest
-   Duration: 3.2 seconds
-```
 
 ---
 
@@ -250,627 +130,1276 @@ python -m src.evals.runner --dataset mixed
 
 ### System Overview
 
-```mermaid
-graph TB
-    subgraph "🎯 User Layer"
-        CLI[🖥️ CLI<br/>main.py]
-        API[🔌 Programmatic API<br/>src/]
-    end
-
-    subgraph "🎭 Agent Layer"
-        Planner[🧠 Planner<br/>Task Decomposition]
-        Actor[🎯 Actor<br/>Tool Selection]
-        Orchestrator[🔄 Orchestrator<br/>LangGraph Execution]
-        Coder[💻 Coder<br/>Test Generation]
-        Critic[👨‍⚖️ Critic<br/>Quality Review]
-    end
-
-    subgraph "🛠️ Tool Ecosystem"
-        GitTool[📊 Git Integration<br/>Change Tracking]
-        RAGTool[🔍 RAG Retrieval<br/>Context Search]
-        ASTTool[🌳 AST Parser<br/>Code Analysis]
-        GenTool[✨ Test Generator<br/>LLM-Powered]
-        SandboxTool[🐳 Docker Sandbox<br/>Safe Execution]
-        QualityTool[✅ Code Quality<br/>Format/Lint/Type]
-    end
-
-    subgraph "🧠 Intelligence Layer"
-        LLMProviders[🤖 LLM Providers<br/>Ollama/OpenAI/Gemini]
-        Embeddings[🗄️ ChromaDB<br/>Vector Store]
-        Guardrails[🛡️ Guardrails<br/>95% Security Coverage]
-        Observability[📊 Observability<br/>Logs/Metrics/Traces]
-    end
-
-    CLI --> Planner
-    API --> Planner
-    Planner --> Actor
-    Actor --> Orchestrator
-    Orchestrator --> Coder
-    Orchestrator --> Critic
-
-    Coder --> GitTool
-    Coder --> RAGTool
-    Coder --> ASTTool
-    Coder --> GenTool
-    Coder --> SandboxTool
-    Coder --> QualityTool
-
-    Critic --> QualityTool
-
-    GitTool --> Embeddings
-    RAGTool --> Embeddings
-    GenTool --> LLMProviders
-    SandboxTool --> Docker
-
-    direction LR
-    LLMProviders -.-> Guardrails
-    LLMProviders -.-> Observability
-    Guardrails -.-> Observability
-    Observability -.-> Prometheus
-    Observability -.-> Grafana
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     USER INTERFACE                          │
+│  CLI (main.py) | Programmatic API | Make Commands           │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│                   ORCHESTRATOR LAYER                        │
+│  TestGenerator → Orchestrator (LangGraph 1.0)               │
+│  • Workflow coordination                                    │
+│  • State management                                         │
+│  • Tool selection & execution                               │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│                    INTELLIGENCE LAYER                       │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │ Context      │  │ Hybrid       │  │ Symbol       │     │
+│  │ Assembler    │  │ Search       │  │ Index        │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │ Incremental  │  │ Test         │  │ Git          │     │
+│  │ Indexer      │  │ Tracking DB  │  │ Integration  │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│                     STORAGE LAYER                           │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │ ChromaDB     │  │ SQLite       │  │ Symbol       │     │
+│  │ (Embeddings) │  │ (Tracking)   │  │ Index (JSON) │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Agentic Architecture
+### Database Schema (SQLite)
 
-The system implements a true **agentic architecture** with specialized agents:
+The system uses a **single SQLite database** for all tracking:
 
-#### 🧠 **Planner Agent**
-- **Task Decomposition**: Breaks complex goals into actionable steps
-- **Tool Selection**: Chooses optimal tools for each step
-- **Resource Planning**: Optimizes token usage and execution time
-- **Goal Alignment**: Ensures 90/90 targets are met
+```sql
+-- Function-level tracking
+CREATE TABLE source_functions (
+    id INTEGER PRIMARY KEY,
+    function_name TEXT NOT NULL,
+    file_path TEXT NOT NULL,
+    start_line INTEGER,
+    end_line INTEGER,
+    function_hash TEXT,  -- SHA256 of normalized code
+    has_test BOOLEAN DEFAULT FALSE,
+    test_count INTEGER DEFAULT 0,
+    last_modified TIMESTAMP
+);
 
-#### 💻 **Coder Agent**
-- **Multi-Language Generation**: Python, Java, JavaScript, TypeScript
-- **Framework Detection**: Auto-detects and uses appropriate frameworks
-- **Coverage Optimization**: Targets specific uncovered code sections
-- **Quality Assurance**: Generates tests that pass linting and type checking
+-- Test cases
+CREATE TABLE test_cases (
+    id INTEGER PRIMARY KEY,
+    test_name TEXT NOT NULL,
+    test_file TEXT NOT NULL,
+    source_function_id INTEGER,
+    test_type TEXT,  -- unit, integration, etc.
+    created_at TIMESTAMP,
+    last_updated TIMESTAMP,
+    is_passing BOOLEAN,
+    FOREIGN KEY (source_function_id) REFERENCES source_functions(id)
+);
 
-#### 👨‍⚖️ **Critic Agent**
-- **Quality Review**: LLM-as-reviewer for generated tests
-- **Style Enforcement**: Ensures consistent code style
-- **Best Practices**: Validates testing patterns and conventions
-- **Feedback Loop**: Provides actionable improvement suggestions
+-- File relationships (source ↔ test)
+CREATE TABLE file_relationships (
+    id INTEGER PRIMARY KEY,
+    source_file TEXT NOT NULL,
+    test_file TEXT NOT NULL,
+    source_hash TEXT,
+    test_hash TEXT,
+    last_synced TIMESTAMP,
+    UNIQUE(source_file, test_file)
+);
 
-#### 🔄 **Orchestrator**
-- **LangGraph Execution**: State management and workflow control
-- **Dynamic Tool Selection**: Real-time tool choice based on context
-- **Error Recovery**: Handles failures and retries intelligently
-- **Context Propagation**: Maintains state across agent interactions
+-- Index metadata (for smart indexing)
+CREATE TABLE index_metadata (
+    file_path TEXT PRIMARY KEY,
+    file_hash TEXT NOT NULL,
+    last_indexed TIMESTAMP,
+    chunk_count INTEGER,
+    embedding_version TEXT
+);
 
-### Security Model
-
-```mermaid
-graph TB
-    subgraph "🛡️ 9-Layer Guardrails (95% Coverage)"
-        Layer1[1. Scope & Policy<br/>Risk-based access control]
-        Layer2[2. Input Guards<br/>PII detection, injection prevention]
-        Layer3[3. Planning<br/>Tool constraints, budget limits]
-        Layer4[4. Tool Execution<br/>Sandbox isolation, parameter validation]
-        Layer5[5. Output Guards<br/>Code scanning, license compliance]
-        Layer6[6. HITL<br/>Human approval for high-risk actions]
-        Layer7[7. Observability<br/>Comprehensive audit logging]
-        Layer8[8. Budget Tracking<br/>Token/cost/time enforcement]
-        Layer9[9. Constitutional AI<br/>Self-verification principles]
-    end
-
-    subgraph "🔒 Security Features"
-        PII[🔍 PII Detection<br/>7 PII types]
-        Injection[🛑 Prompt Injection<br/>12 attack patterns]
-        Secrets[🔐 Secrets Protection<br/>API keys, tokens]
-        Boundaries[🚧 File Boundaries<br/>Strict access controls]
-        Determinism[⚡ Determinism<br/>No flaky tests]
-        Sandbox[🐳 Docker Sandbox<br/>Isolated execution]
-    end
-
-    Layer1 --> Layer2 --> Layer3 --> Layer4 --> Layer5 --> Layer6 --> Layer7 --> Layer8 --> Layer9
-    PII --> Layer2
-    Injection --> Layer2
-    Secrets --> Layer8
-    Boundaries --> Layer4
-    Determinism --> Layer3
-    Sandbox --> Layer4
-```
-
-### Observability
-
-```mermaid
-graph TB
-    subgraph "📊 Observability Stack"
-        Logs[📝 Structured Logs<br/>Loguru + Console/File/DB]
-        Metrics[📈 Prometheus Metrics<br/>50+ time-series metrics]
-        Traces[🔗 Distributed Traces<br/>Request flow tracking]
-        Alerts[🚨 Alerting<br/>Threshold-based notifications]
-        Dashboards[📊 Dashboards<br/>Real-time visualization]
-    end
-
-    subgraph "🔧 Implementation"
-        Logger[🔍 Logger<br/>Loguru with context]
-        Collector[📊 Metrics Collector<br/>Counter/Gauge/Histogram]
-        Tracer[🔗 Tracer<br/>Span tracking]
-        Monitor[📺 Console Monitor<br/>Live dashboard]
-        Exporter[📤 Prometheus Exporter<br/>/metrics endpoint]
-    end
-
-    subgraph "📈 Metrics Categories"
-        LLM[🤖 LLM Performance<br/>Calls, tokens, latency, cost]
-        Tests[🧪 Test Generation<br/>Coverage, pass rate, duration]
-        Agents[🎭 Agent Activity<br/>Iterations, tool calls, decisions]
-        Guardrails[🛡️ Safety Events<br/>Checks, violations, blocks]
-        System[💻 System Health<br/>CPU, memory, errors]
-    end
-
-    Logs --> Logger
-    Metrics --> Collector --> Exporter
-    Traces --> Tracer
-    Alerts --> Logger
-    Dashboards --> Monitor
-
-    LLM --> Collector
-    Tests --> Collector
-    Agents --> Collector
-    Guardrails --> Collector
-    System --> Collector
-```
-
-### Evaluation System
-
-```mermaid
-graph TB
-    subgraph "🧪 360° Evaluation Framework"
-        Quality[📊 Test Quality<br/>40% weight<br/>Correctness, Coverage, Completeness]
-        Performance[🎭 Agent Performance<br/>25% weight<br/>Planner, Coder, Critic]
-        Safety[🛡️ Guardrails<br/>20% weight<br/>PII, secrets, injection, boundaries]
-        Goals[🎯 Goal Achievement<br/>10% weight<br/>90/90 targets tracking]
-        Efficiency[⚡ System Efficiency<br/>5% weight<br/>Latency, cost, throughput]
-    end
-
-    subgraph "📋 Evaluation Dimensions"
-        Correctness[✅ Syntax & Execution<br/>Tests run without errors]
-        Coverage[📏 Code Coverage<br/>Line/branch/function coverage]
-        Completeness[🎯 Edge Cases<br/>Error paths, boundary conditions]
-        Determinism[🔄 Consistency<br/>No flaky tests, repeatable]
-        Assertions[📝 Test Quality<br/>Meaningful assertions]
-        Mocking[🔗 Isolation<br/>External dependency mocking]
-    end
-
-    subgraph "🎯 Goal Tracking"
-        CoverageGoal[🎯 90% Coverage<br/>Current: 92.3%]
-        PassRateGoal[🎯 90% Pass Rate<br/>Current: 94.7%]
-        GapAnalysis[📊 Gap Analysis<br/>Coverage gap: -2.3%<br/>Pass rate gap: -4.7%]
-        Achievement[🏆 Achievement Score<br/>97.3% of goals met]
-    end
-
-    Quality --> Correctness
-    Quality --> Coverage
-    Quality --> Completeness
-    Quality --> Determinism
-    Quality --> Assertions
-    Quality --> Mocking
-
-    Goals --> CoverageGoal
-    Goals --> PassRateGoal
-    Goals --> GapAnalysis
-    Goals --> Achievement
+-- Coverage history (for trending)
+CREATE TABLE coverage_history (
+    id INTEGER PRIMARY KEY,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_functions INTEGER,
+    functions_with_tests INTEGER,
+    coverage_percentage REAL
+);
 ```
 
 ---
 
-## 🔧 Usage Guide
+## 🚀 Quick Start
 
-### Basic Usage
+### Prerequisites
 
-#### Generate Tests for a Single File
+- **Python 3.11+** (required)
+- **Docker** (recommended for sandbox execution)
+- **Git** (for change tracking)
+- **Ollama** / **OpenAI** / **Gemini** (choose one LLM provider)
 
-```bash
-# Generate tests for a Python file
-python main.py generate-file my_module.py
-
-# Generate tests for a JavaScript file
-python main.py generate-file app.js --language javascript
-
-# Generate tests for a TypeScript file
-python main.py generate-file component.tsx --language typescript
-```
-
-#### Generate Tests for Git Changes
+### Installation
 
 ```bash
-# Generate tests for files changed since last commit
-python main.py generate-changes
+# 1. Clone repository
+git clone <your-repo-url>
+cd AgenticTestGenerator
 
-# Generate tests for specific file changes
-python main.py generate-file --git-diff
+# 2. Complete setup (installs everything)
+make init
 
-# Check git status before generating
-python main.py status
+# That's it! The init command will:
+# ✓ Create virtual environment
+# ✓ Install all dependencies (including LangChain 1.0)
+# ✓ Verify LangChain installation
+# ✓ Check Ollama models (if using Ollama)
+# ✓ Set up directory structure
 ```
 
-#### Batch Processing
+### Configuration
+
+Create `.env` file in project root:
 
 ```bash
-# Generate tests for all Python files in a directory
-python main.py generate-batch src/**/*.py
+# Required: Source code location
+SOURCE_CODE_DIR=/path/to/your/project/src
+TEST_OUTPUT_DIR=/path/to/your/project/tests
 
-# Generate tests for specific patterns
-python main.py generate-batch "src/**/*.py" --exclude "test_*"
+# Required: LLM Provider (choose one)
+LLM_PROVIDER=gemini  # ollama, openai, or gemini
+
+# If using Gemini (recommended)
+GOOGLE_API_KEY=your_google_api_key_here
+GOOGLE_MODEL=gemini-1.5-flash
+
+# If using OpenAI
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-4
+
+# If using Ollama (local, free)
+OLLAMA_MODEL=qwen3-coder:30b
+OLLAMA_BASE_URL=http://localhost:11434
+
+# Optional: Embeddings (default: Google)
+EMBEDDING_PROVIDER=google  # google, openai, or ollama
+EMBEDDING_MODEL=models/text-embedding-004
+
+# Optional: Reranker (default: Gemini)
+RERANKER_PROVIDER=gemini
+RERANKER_MODEL=gemini-1.5-flash
+
+# Optional: Security & Limits
+GUARDRAILS_ENABLED=true
+BUDGET_DAILY_TOKENS=1000000
+BUDGET_DAILY_COST=50.00
+
+# Optional: Performance
+MAX_ITERATIONS=5
+DOCKER_TIMEOUT=60
 ```
 
-### Advanced Configuration
+### First Run
 
-#### Custom LLM Provider
+```bash
+# 1. Check system status
+make status
+
+# 2. Generate tests for your codebase
+make generate
+
+# That's it! The system will:
+# ✓ Auto-index your codebase (embeddings + symbols)
+# ✓ Scan all functions using AST parsing
+# ✓ Detect existing tests
+# ✓ Populate tracking database
+# ✓ Generate tests for untested functions
+# ✓ Show coverage report
+
+# 3. View detailed coverage
+make coverage
+```
+
+**Example Output:**
+
+```
+🚀 Test Generation Starting...
+
+══════════════════════════════════════════════════════════════
+🔧 [INDEXER] Starting Incremental Indexing
+══════════════════════════════════════════════════════════════
+→ Building symbol index...
+✓ Indexed 15 symbols (8 functions, 7 classes)
+
+→ Building semantic index...
+✓ Indexed 42 code chunks
+
+══════════════════════════════════════════════════════════════
+💾 [DATABASE] Syncing Function Tracking
+══════════════════════════════════════════════════════════════
+→ Scanning source files...
+✓ Found 8 functions in 2 files
+
+→ Detecting existing tests...
+✓ Found 2 test functions
+
+══════════════════════════════════════════════════════════════
+🤖 [GENERATOR] Analyzing Changes
+══════════════════════════════════════════════════════════════
+✓ Found 6 functions needing tests
+
+══════════════════════════════════════════════════════════════
+⚡ [ORCHESTRATOR] Generating Tests
+══════════════════════════════════════════════════════════════
+✨ Creating test for calculate.py
+  ✓ Created test_calculate.py (3 test functions)
+
+══════════════════════════════════════════════════════════════
+📊 Generation Statistics
+══════════════════════════════════════════════════════════════
+Actions Taken:
+  ✨ Created:  1
+  🔄 Updated:  0
+  🗑️  Deleted:  0
+
+Overall Coverage:
+  📁 Source Files:     2
+  🧪 Test Files:       1
+  ✓ With Tests:        1
+  📊 Coverage:         75.0%
+```
+
+---
+
+## 📖 Make Commands Reference
+
+### Core Commands
+
+```bash
+# System Setup
+make init           # Complete project initialization (install deps, setup env)
+make install        # Install runtime dependencies only
+make install-dev    # Install dev dependencies (linting, testing, etc.)
+
+# Test Generation
+make generate       # Generate tests for changed/untested code (smart mode)
+make gen-ollama     # Generate using Ollama provider
+make gen-openai     # Generate using OpenAI provider
+make gen-gemini     # Generate using Gemini provider
+
+# Code Analysis
+make index          # Index codebase (embeddings + symbols, incremental)
+make coverage       # Show function-level test coverage report
+make status         # Display system status (Git, DB, embeddings, LLM)
+
+# Quality Assurance
+make test           # Run all unit tests
+make lint           # Check code style (flake8)
+make format         # Format code (black)
+make verify         # Verify LangChain 1.0 installation
+
+# Cleanup
+make clean          # Remove build artifacts and caches
+make clean-data     # Remove all persistent data (DB, indices, embeddings)
+make clean-all      # Complete cleanup (build + data)
+
+# Ollama Management
+make ollama-preload # Preload Ollama models into memory
+
+# Development
+make run            # Show CLI help
+make version        # Show version info and architecture details
+make help           # Show all available commands
+```
+
+### Command Details
+
+#### `make init`
+**Purpose**: Complete project initialization
+
+**What it does:**
+1. Creates Python virtual environment (`.venv`)
+2. Installs all dependencies via `uv sync`
+3. Installs LangChain 1.0 packages
+4. Verifies LangChain installation
+5. Checks for Ollama models (if using Ollama)
+6. Displays setup summary
+
+**When to use**: First time setup, or after pulling major updates
+
+#### `make generate`
+**Purpose**: Intelligent test generation
+
+**What it does:**
+1. Preloads Ollama models (if using Ollama)
+2. Runs incremental indexing (only changed files)
+3. Syncs tracking database
+4. Queries database for untested functions
+5. Falls back to Git changes if DB is empty
+6. Generates tests using context assembly
+7. Updates database with new tests
+8. Cleans up orphaned test records
+9. Shows coverage statistics
+
+**Smart Features:**
+- **Auto-indexing**: Runs incremental indexing before generation
+- **Auto-sync**: Syncs database with codebase on first run
+- **Function-level**: Tracks and generates per-function, not per-file
+- **Change detection**: SHA256 hash-based, ignores whitespace
+
+**When to use**: Every time you want to generate tests
+
+#### `make coverage`
+**Purpose**: Display detailed coverage report
+
+**What it does:**
+1. Queries tracking database for function stats
+2. Calculates per-function, per-file, and overall coverage
+3. Shows functions needing tests (top 10)
+4. Displays detailed breakdown
+
+**Output includes:**
+- Total functions tracked
+- Functions with tests vs without
+- Total test cases
+- Coverage percentage
+- Per-file breakdown
+- Top 10 untested functions
+
+**When to use**: After generation, or to check current coverage
+
+#### `make index`
+**Purpose**: Manually trigger indexing
+
+**What it does:**
+1. Builds symbol index (functions, classes, imports)
+2. Creates semantic embeddings (ChromaDB)
+3. Updates index metadata in database
+4. Shows indexing statistics
+
+**Smart Features:**
+- **Incremental**: Only re-indexes changed files
+- **Hash-based**: Uses SHA256 to detect actual changes
+- **Dual indexing**: Both symbols and embeddings
+
+**When to use:**
+- After major codebase changes
+- To force re-indexing (`--force` flag)
+- Before first generation (though `make generate` does this automatically)
+
+#### `make status`
+**Purpose**: Display comprehensive system status
+
+**What it does:**
+1. Shows configuration (directories, LLM provider, etc.)
+2. Displays Git status (branch, commits, changes)
+3. Shows embedding store stats
+4. Reports tracking database stats
+5. Verifies LLM provider connectivity
+
+**When to use**: Debugging, verification, or before generation
+
+#### `make clean-data`
+**Purpose**: Remove all persistent data
+
+**What it does:**
+1. Prompts for confirmation (destructive operation!)
+2. Removes:
+   - Symbol index (`.symbol_index.json`)
+   - Vector store (`chroma_db/`)
+   - Legacy metadata (`.index_metadata.json`, `.test_relationships.json`)
+   - Test tracker JSON (`.test_tracker.json`)
+   - Tracking database (`.test_tracking.db`)
+
+**When to use:**
+- Fresh start from scratch
+- After major refactoring
+- To clear all cached data
+
+**⚠️ Warning**: This will delete all tracking data! You'll need to re-run `make index` and `make generate` after.
+
+---
+
+## 🔧 Advanced Techniques
+
+### 1. Function-Level Tracking
+
+**How it works:**
+```python
+# AST-based function extraction
+import ast
+
+def extract_functions(file_path):
+    with open(file_path) as f:
+        tree = ast.parse(f.read())
+    
+    functions = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef):
+            functions.append({
+                'name': node.name,
+                'start_line': node.lineno,
+                'end_line': node.end_lineno,
+                'hash': hash_function_code(node)
+            })
+    return functions
+```
+
+**Database sync:**
+```bash
+# First run: Scans entire codebase
+make generate
+→ Scanning source files...
+→ Found 156 functions across 42 files
+→ Detecting existing tests...
+→ Found 87 test functions
+→ Populated tracking database
+
+# Subsequent runs: Only checks changed files
+make generate
+→ Using incremental indexing
+→ 3 files changed, 12 functions affected
+→ 5 functions need new/updated tests
+```
+
+### 2. Context Assembly
+
+**Pre-gathers 9 types of context** before every LLM call:
 
 ```python
-# Use OpenAI instead of Ollama
-export LLM_PROVIDER=openai
-export OPENAI_API_KEY=your_key_here
-export OPENAI_MODEL=gpt-4
-
-# Use Gemini
-export LLM_PROVIDER=gemini
-export GEMINI_API_KEY=your_key_here
+# src/context_assembler.py
+class ContextAssembler:
+    def assemble(self, source_code, file_path, function_name):
+        context = AssembledContext(
+            target_code=source_code,
+            related_functions=self._get_related_code(),      # Semantic
+            dependencies=self._extract_dependencies(),        # Imports
+            callers=self._find_callers(),                    # Symbol index
+            callees=self._find_callees(),                    # Symbol index
+            usage_examples=self._find_usage_patterns(),      # Hybrid search
+            git_history=self._get_git_history(),             # Git
+            existing_tests=self._find_existing_tests(),      # Database
+            metadata=self._collect_metadata()                # AST + file stats
+        )
+        return context
 ```
 
-#### Security Configuration
+**Quality score:**
+- 9 types × 10 points each = 90 max
+- Returns score: `75/90 (good)` → shows what's missing
+
+### 3. Hybrid Search
+
+**Combines three search strategies:**
+
+```python
+# src/hybrid_search.py
+class HybridSearchEngine:
+    def search(self, query, k=10):
+        # 1. Exact search (O(1) symbol index)
+        exact = self.symbol_index.search(query)
+        
+        # 2. Semantic search (ChromaDB embeddings)
+        semantic = self.embedding_store.search(query, k=k)
+        
+        # 3. Keyword search (basic string matching)
+        keyword = self._keyword_search(query, k=k)
+        
+        # 4. Reciprocal Rank Fusion (RRF)
+        fused = self._fuse_results(exact, semantic, keyword)
+        
+        # 5. Reranking (cross-encoder)
+        if self.reranker:
+            reranked = self.reranker.rerank(query, fused, top_k=k)
+            return reranked
+        
+        return fused[:k]
+```
+
+**When to use each:**
+- **Exact**: Finding specific functions/classes by name
+- **Semantic**: Finding code by meaning ("functions that validate email")
+- **Keyword**: Finding literal string matches
+- **Hybrid**: Best results, combines all three
+
+### 4. Smart Incremental Indexing
+
+**Hash-based change detection:**
+
+```python
+# src/indexer.py
+class IncrementalIndexer:
+    def index(self, force=False):
+        for file_path in self.source_dir.rglob("*.py"):
+            current_hash = self._get_file_hash(file_path)
+            stored_hash = self.metadata.get(file_path, {}).get('hash')
+            
+            if force or current_hash != stored_hash:
+                # File changed, re-index
+                self._index_file(file_path)
+                self.metadata[file_path] = {
+                    'hash': current_hash,
+                    'last_indexed': datetime.now(),
+                    'chunk_count': len(chunks)
+                }
+```
+
+**Performance:**
+- **First run**: Indexes all files (~2-5 min for 100 files)
+- **Subsequent runs**: Only changed files (~5-30 sec)
+- **Storage**: Metadata persisted in database
+
+### 5. Symbol Index
+
+**O(1) exact lookups:**
+
+```python
+# src/symbol_index.py
+class SymbolIndex:
+    def __init__(self):
+        self.functions = {}      # name → FunctionInfo
+        self.classes = {}        # name → ClassInfo
+        self.imports = {}        # module → Set[imported_names]
+        self.call_graph = {}     # caller → Set[callees]
+        self.reverse_calls = {}  # callee → Set[callers]
+    
+    def search_function(self, name: str):
+        return self.functions.get(name)  # O(1)
+    
+    def find_callers(self, function_name: str):
+        return self.reverse_calls.get(function_name, set())  # O(1)
+```
+
+**Stored in JSON:**
+```json
+{
+  "functions": {
+    "calculate_total": {
+      "file": "src/calculator.py",
+      "line": 42,
+      "calls": ["add", "multiply"],
+      "called_by": ["main", "process_order"]
+    }
+  }
+}
+```
+
+### 6. Ollama Model Preloading
+
+**Keeps models in memory for instant inference:**
+
+```python
+# src/ollama_manager.py
+class OllamaManager:
+    def preload_models(self):
+        # Check what's already loaded
+        loaded = self.get_loaded_models()
+        
+        # Load missing models
+        for model, endpoint in self.models.items():
+            if model not in loaded:
+                self.load_model(model, endpoint)
+                # Keep in memory indefinitely
+                self._set_keep_alive(model, keep_alive=-1)
+```
+
+**Benefits:**
+- **No model switching overhead**: All models stay in memory
+- **Instant inference**: No loading delay
+- **Automatic check**: Skips already-loaded models
+
+### 7. Structured JSON Communication
+
+**Type-safe schemas for all components:**
+
+```python
+# src/schemas.py
+class LLMResponse(BaseModel):
+    reasoning: str
+    tool_calls_summary: List[ToolCall]
+    test_code: TestCode
+    coverage: CoverageMetrics
+
+class TestCode(BaseModel):
+    code: str
+    imports: List[str]
+    test_functions: List[str]
+    test_classes: List[str]
+    dependencies: List[str]
+```
+
+**LLM receives:**
+```json
+{
+  "instruction": "Generate tests...",
+  "expected_format": {
+    "reasoning": "string explaining approach",
+    "test_code": {
+      "code": "full test code here",
+      "imports": ["pytest", "mock"],
+      "test_functions": ["test_add", "test_multiply"]
+    }
+  }
+}
+```
+
+**LLM responds:**
+```json
+{
+  "reasoning": "I'll test edge cases...",
+  "test_code": {
+    "code": "import pytest\n\ndef test_add():\n    ...",
+    "imports": ["pytest"],
+    "test_functions": ["test_add", "test_multiply"],
+    "test_classes": [],
+    "dependencies": []
+  },
+  "coverage": {
+    "lines_covered": 42,
+    "branches_covered": 8
+  }
+}
+```
+
+---
+
+## 📊 Observability & Monitoring
+
+### Console Tracking
+
+**Real-time component-level logging:**
+
+```python
+# src/console_tracker.py
+class ConsoleTracker:
+    def section_header(self, component: str, message: str):
+        print(f"\n{'='*70}")
+        print(f"{self._get_icon(component)} [{component}] {message}")
+        print(f"{'='*70}")
+```
+
+**Output:**
+
+```
+══════════════════════════════════════════════════════════════
+🔧 [INDEXER] Starting Incremental Indexing
+══════════════════════════════════════════════════════════════
+→ Checking 42 files...
+✓ 3 files changed, 39 unchanged
+
+══════════════════════════════════════════════════════════════
+💾 [DATABASE] Querying Untested Functions
+══════════════════════════════════════════════════════════════
+→ Found 12 functions without tests
+→ Prioritizing by complexity...
+
+══════════════════════════════════════════════════════════════
+🤖 [ORCHESTRATOR] LLM Call
+══════════════════════════════════════════════════════════════
+→ Provider: gemini
+→ Model: gemini-1.5-flash
+→ Prompt tokens: 1,247
+→ Completion tokens: 856
+→ Total cost: $0.0032
+→ Latency: 2.4s
+
+══════════════════════════════════════════════════════════════
+🛡️ [GUARDRAILS] Output Validation
+══════════════════════════════════════════════════════════════
+✓ No PII detected
+✓ No secrets detected
+✓ Code quality passed
+✓ All checks passed
+```
+
+### Prometheus Metrics
+
+**50+ metrics tracked:**
+
+```python
+# Key Metrics
+test_generation_total            # Counter: Tests generated
+test_generation_errors_total     # Counter: Errors occurred
+test_generation_duration_seconds # Histogram: Generation time
+test_coverage_ratio              # Gauge: Current coverage %
+llm_tokens_total                 # Counter: Total tokens used
+llm_cost_dollars_total          # Counter: Total cost
+guardrail_checks_total          # Counter: Security checks
+guardrail_violations_total      # Counter: Security violations
+```
+
+**Access metrics:**
 
 ```bash
-# Enable strict guardrails
-export GUARDRAILS_ENABLED=true
-export BUDGET_DAILY_TOKENS=500000
-export BUDGET_DAILY_COST=25.00
-
-# Enable PII scrubbing
-export SCRUB_PII=true
-```
-
-#### Performance Tuning
-
-```bash
-# Increase parallel processing
-export MAX_WORKERS=4
-
-# Adjust timeout for large files
-export DOCKER_TIMEOUT=120
-
-# Enable caching for faster subsequent runs
-export CACHE_EMBEDDINGS=true
-```
-
-### CI/CD Integration
-
-#### GitHub Actions Example
-
-```yaml
-name: Test Generation & Quality Check
-
-on:
-  pull_request:
-    paths:
-      - 'src/**/*.py'
-      - 'tests/**'
-
-jobs:
-  generate-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # For git diff
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          make dev-setup
-
-      - name: Generate tests for changes
-        run: |
-          source .venv/bin/activate
-          python main.py generate-changes
-
-      - name: Run evaluation
-        run: |
-          python -m src.evals.runner --dataset mixed
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: |
-            tests/
-            evals/results/
-```
-
-#### GitLab CI Example
-
-```yaml
-stages:
-  - generate
-  - test
-  - evaluate
-
-generate_tests:
-  stage: generate
-  image: python:3.11
-  script:
-    - pip install -r requirements.txt
-    - python main.py generate-changes
-  artifacts:
-    paths:
-      - tests/
-    expire_in: 1 day
-
-run_evaluation:
-  stage: evaluate
-  image: python:3.11
-  script:
-    - pip install -r requirements.txt
-    - python -m src.evals.runner --dataset mixed
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: evals/results/coverage.xml
-```
-
-### Monitoring & Alerting
-
-#### Real-Time Monitoring
-
-```bash
-# Start the observability monitor
-python -m src.observability.monitor --interval 5
-
 # Start Prometheus exporter
-python -m src.observability.prometheus_exporter --port 9090
+make run-prometheus
 
-# Access metrics
+# Access metrics endpoint
 curl http://localhost:9090/metrics
 ```
 
-#### Grafana Dashboard Setup
+### Real-Time Monitoring
 
-1. **Install Grafana**
 ```bash
-# Using Docker
-docker run -d -p 3000:3000 --name grafana grafana/grafana
+# Start live dashboard
+python -m src.observability.monitor --interval 10
 
-# Using package manager
-sudo apt-get install grafana
+# Output updates every 10 seconds:
 ```
 
-2. **Configure Prometheus Data Source**
+```
+╭─────────────────────────────────────────────────────────────╮
+│ 📊 Agentic Test Generator - Live Metrics                   │
+│ Update interval: 10s | Press Ctrl+C to exit                │
+╰─────────────────────────────────────────────────────────────╯
+
+🔥 System Health
+  CPU Usage:       24.5%
+  Memory Usage:    1.2 GB / 16.0 GB (7.5%)
+  Active Threads:  8
+
+🤖 LLM Activity (Last 1 minute)
+  Total Calls:     12
+  Avg Latency:     2.3s
+  Total Tokens:    18,453
+  Total Cost:      $0.0847
+
+🧪 Test Generation (Last 1 minute)
+  Tests Created:   5
+  Tests Updated:   2
+  Errors:          0
+  Coverage:        87.3%
+
+🛡️ Guardrails (Last 1 minute)
+  Total Checks:    45
+  Violations:      0
+  PII Detected:    0
+  Blocked Calls:   0
+```
+
+---
+
+## 🛡️ Security & Guardrails
+
+### 9-Layer Security Model
+
+```
+Layer 1: Scope & Policy         → Risk-based access control
+Layer 2: Input Guards           → PII, injection, malicious code
+Layer 3: Planning               → Tool constraints, budget limits
+Layer 4: Tool Execution         → Sandbox isolation, validation
+Layer 5: Output Guards          → Code scanning, license compliance
+Layer 6: HITL                   → Human approval for high-risk
+Layer 7: Observability          → Comprehensive audit logging
+Layer 8: Budget Tracking        → Token/cost/time enforcement
+Layer 9: Constitutional AI      → Self-verification principles
+```
+
+### PII Detection
+
+**7 PII types automatically detected and redacted:**
+
+```python
+# Email addresses
+user@example.com → [EMAIL_REDACTED]
+
+# Phone numbers
+(555) 123-4567 → [PHONE_REDACTED]
+
+# Credit cards
+4532-1234-5678-9010 → [CC_REDACTED]
+
+# SSN
+123-45-6789 → [SSN_REDACTED]
+
+# IP addresses
+192.168.1.1 → [IP_REDACTED]
+
+# API keys
+sk-1234567890abcdef → [API_KEY_REDACTED]
+
+# Passwords
+password="secret123" → password="[PASSWORD_REDACTED]"
+```
+
+### Prompt Injection Prevention
+
+**12 attack patterns blocked:**
+
+```python
+# Command injection
+"Ignore previous instructions..." → BLOCKED
+
+# Jailbreak attempts
+"You are now DAN..." → BLOCKED
+
+# Data extraction
+"Show me all previous prompts..." → BLOCKED
+
+# Privilege escalation
+"sudo rm -rf /" → BLOCKED
+```
+
+### Budget Enforcement
+
+```python
+# .env configuration
+BUDGET_DAILY_TOKENS=1000000
+BUDGET_DAILY_COST=50.00
+BUDGET_HOURLY_COST=10.00
+
+# Real-time tracking
+current_tokens = 847,392
+current_cost = $38.24
+remaining_budget = $11.76
+```
+
+---
+
+## 🤖 LLM Providers
+
+### Supported Providers
+
+| Provider | Type | Speed | Cost | Quality | Setup |
+|----------|------|-------|------|---------|-------|
+| **Gemini** | Cloud | ⚡⚡⚡ | $ | ⭐⭐⭐⭐ | Easy |
+| **Ollama** | Local | ⚡⚡ | Free | ⭐⭐⭐ | Medium |
+| **OpenAI** | Cloud | ⚡⚡⚡ | $$$ | ⭐⭐⭐⭐⭐ | Easy |
+
+### Gemini Setup (Recommended)
+
+**Why Gemini?**
+- ✅ Best value ($0.075 / 1M input tokens)
+- ✅ Fast inference (1-3s)
+- ✅ Good code generation quality
+- ✅ Large context window (1M tokens)
+- ✅ Free tier available
+
+**Setup:**
+
 ```bash
-# Add to Grafana
-# URL: http://localhost:9090
-# Access: Server (default)
+# 1. Get API key
+# Visit: https://makersuite.google.com/app/apikey
+
+# 2. Configure .env
+cat >> .env << EOF
+LLM_PROVIDER=gemini
+GOOGLE_API_KEY=your_api_key_here
+GOOGLE_MODEL=gemini-1.5-flash  # or gemini-1.5-pro
+
+EMBEDDING_PROVIDER=google
+EMBEDDING_MODEL=models/text-embedding-004
+
+RERANKER_PROVIDER=gemini
+RERANKER_MODEL=gemini-1.5-flash
+EOF
+
+# 3. Verify
+make verify
+
+# 4. Generate tests
+make generate
 ```
 
-3. **Import Dashboard**
+**Models:**
+- `gemini-1.5-flash`: Fast, cheap, good quality (recommended)
+- `gemini-1.5-pro`: Best quality, more expensive
+- `gemini-2.0-flash-exp`: Experimental, latest features
+
+### Ollama Setup (Local & Free)
+
+**Why Ollama?**
+- ✅ Completely free
+- ✅ Runs locally (no API calls)
+- ✅ Privacy (data never leaves your machine)
+- ✅ No rate limits
+
+**Setup:**
+
 ```bash
-# Import pre-built dashboard
-curl -X POST http://localhost:3000/api/dashboards/import \
-  -H "Content-Type: application/json" \
-  -d @grafana-dashboard.json
+# 1. Install Ollama
+# Visit: https://ollama.com
+
+# 2. Pull models
+ollama pull qwen3-coder:30b            # Main coder model
+ollama pull qwen3-embedding:8b         # Embeddings
+ollama pull dengcao/Qwen3-Reranker-8B:Q8_0  # Reranker
+
+# 3. Configure .env
+cat >> .env << EOF
+LLM_PROVIDER=ollama
+OLLAMA_MODEL=qwen3-coder:30b
+OLLAMA_BASE_URL=http://localhost:11434
+
+EMBEDDING_PROVIDER=ollama
+EMBEDDING_MODEL=qwen3-embedding:8b
+
+RERANKER_PROVIDER=ollama
+RERANKER_MODEL=dengcao/Qwen3-Reranker-8B:Q8_0
+EOF
+
+# 4. Preload models (keeps in memory)
+make ollama-preload
+
+# 5. Generate tests
+make generate
 ```
 
-#### Alerting Rules
+**Requirements:**
+- **RAM**: 32GB+ recommended for 30B model
+- **Storage**: ~30GB for all models
+- **GPU**: Optional but recommended (CUDA/ROCm)
 
-```yaml
-# prometheus/alerts.yml
-groups:
-  - name: test_generation
-    rules:
-      - alert: HighErrorRate
-        expr: rate(test_generation_errors_total[5m]) > 0.05
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High error rate in test generation"
+### OpenAI Setup (Premium)
 
-      - alert: LowCoverage
-        expr: test_coverage_ratio < 0.80
-        for: 3m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Test coverage below 80%"
+**Why OpenAI?**
+- ✅ Best overall quality
+- ✅ Most reliable
+- ✅ Excellent instruction following
 
-      - alert: HighLatency
-        expr: histogram_quantile(0.99, rate(test_generation_duration_seconds_bucket[5m])) > 60
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Test generation latency too high"
-```
+**Setup:**
 
-### Troubleshooting
-
-#### Common Issues
-
-**Ollama Not Running**
 ```bash
-# Check if Ollama is running
-ollama list
+# 1. Get API key
+# Visit: https://platform.openai.com/api-keys
 
-# Start Ollama service
-ollama serve
+# 2. Configure .env
+cat >> .env << EOF
+LLM_PROVIDER=openai
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-4o  # or gpt-4-turbo
 
-# Pull required models
-ollama pull qwen3-coder:30b
-ollama pull qwen3-embedding:8b
+EMBEDDING_PROVIDER=openai
+EMBEDDING_MODEL=text-embedding-3-large
+
+RERANKER_PROVIDER=openai  # Uses GPT-4 for reranking
+EOF
+
+# 3. Generate tests
+make gen-openai
 ```
 
-**Docker Sandbox Issues**
+**Models:**
+- `gpt-4o`: Best quality, expensive
+- `gpt-4-turbo`: Good quality, cheaper
+- `gpt-3.5-turbo`: Fast, cheapest
+
+---
+
+## 🧪 Evaluation System
+
+### 360° Assessment
+
+**5 evaluation categories:**
+
+```python
+1. Test Quality (40% weight)
+   - Correctness (syntax, execution)
+   - Coverage (line, branch, function)
+   - Completeness (edge cases, error paths)
+   - Determinism (no flaky tests)
+
+2. Agent Performance (25% weight)
+   - Planner decisions
+   - Coder efficiency
+   - Critic accuracy
+
+3. Safety (20% weight)
+   - PII detection
+   - Secrets protection
+   - Injection prevention
+   - File boundaries
+
+4. Goal Achievement (10% weight)
+   - 90% coverage target
+   - 90% pass rate target
+   - Gap analysis
+
+5. System Efficiency (5% weight)
+   - Latency
+   - Cost
+   - Throughput
+```
+
+### Running Evaluations
+
 ```bash
-# Check Docker daemon
-docker info
+# Run full evaluation suite
+python -m src.evals.runner --dataset mixed
 
-# Test container execution
-docker run --rm hello-world
+# Run specific categories
+python -m src.evals.runner --category test_quality
+python -m src.evals.runner --category agent_performance
+python -m src.evals.runner --category safety
 
-# Check Docker permissions
-sudo usermod -aG docker $USER
+# Generate reports
+python -m src.evals.reporters.report_generator --format markdown
+python -m src.evals.reporters.report_generator --format json
 ```
 
-**High Memory Usage**
+---
+
+## 📚 Technical Deep Dive
+
+### AST Parsing
+
+**Extracting functions from Python code:**
+
+```python
+import ast
+
+class FunctionVisitor(ast.NodeVisitor):
+    def __init__(self):
+        self.functions = []
+    
+    def visit_FunctionDef(self, node):
+        self.functions.append({
+            'name': node.name,
+            'start_line': node.lineno,
+            'end_line': node.end_lineno,
+            'args': [arg.arg for arg in node.args.args],
+            'returns': ast.get_source_segment(self.source, node.returns) if node.returns else None,
+            'docstring': ast.get_docstring(node),
+            'decorators': [d.id for d in node.decorator_list if isinstance(d, ast.Name)],
+            'async': isinstance(node, ast.AsyncFunctionDef)
+        })
+        self.generic_visit(node)
+```
+
+### SHA256 Hashing
+
+**Detecting real code changes:**
+
+```python
+import hashlib
+
+def hash_function_code(node: ast.FunctionDef) -> str:
+    # Normalize code (remove whitespace, comments)
+    normalized = normalize_code(ast.unparse(node))
+    
+    # Hash the normalized code
+    return hashlib.sha256(normalized.encode()).hexdigest()
+
+def normalize_code(code: str) -> str:
+    # Remove comments
+    code = re.sub(r'#.*$', '', code, flags=re.MULTILINE)
+    
+    # Remove extra whitespace
+    code = re.sub(r'\s+', ' ', code)
+    
+    # Sort imports (order doesn't matter)
+    lines = code.split('\n')
+    imports = sorted([l for l in lines if l.startswith('import')])
+    other = [l for l in lines if not l.startswith('import')]
+    
+    return '\n'.join(imports + other)
+```
+
+### Reciprocal Rank Fusion (RRF)
+
+**Combining multiple search results:**
+
+```python
+def reciprocal_rank_fusion(
+    results_list: List[List[Result]],
+    k: int = 60
+) -> List[Result]:
+    """
+    Combine multiple ranked lists using RRF.
+    
+    RRF Score = Σ(1 / (k + rank_i))
+    where rank_i is the rank in list i
+    """
+    scores = defaultdict(float)
+    
+    for results in results_list:
+        for rank, result in enumerate(results, start=1):
+            scores[result.id] += 1.0 / (k + rank)
+    
+    # Sort by RRF score (descending)
+    ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    
+    return [result_by_id[id] for id, score in ranked]
+```
+
+### Cross-Encoder Reranking
+
+**Improving search result quality:**
+
+```python
+def rerank(self, query: str, results: List[Result], top_k: int = 10):
+    # Create query-document pairs
+    pairs = [(query, result.text) for result in results]
+    
+    # Score each pair using cross-encoder
+    scores = self.model.predict(pairs)
+    
+    # Rerank by score
+    reranked = sorted(zip(results, scores), key=lambda x: x[1], reverse=True)
+    
+    return [result for result, score in reranked[:top_k]]
+```
+
+---
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+#### Issue: "KeyError: 'tested_functions'"
+
+**Cause**: Key name mismatch between database and code
+
+**Fix**: Already fixed in latest version. Database returns `functions_with_tests`, not `tested_functions`.
+
+**Verify:**
 ```bash
-# Monitor memory usage
-htop
-
-# Check ChromaDB memory
-du -sh data/chromadb/
-
-# Clear old embeddings (if needed)
-rm -rf data/chromadb/
+python -c "
+from src.test_tracking_db import create_test_tracking_db
+db = create_test_tracking_db()
+stats = db.get_coverage_stats()
+print('Keys:', list(stats.keys()))
+"
 ```
 
-**Slow Performance**
+#### Issue: "TypeError: '>' not supported between instances of 'dict' and 'int'"
+
+**Cause**: `cleanup_deleted_files()` returns dict, not int
+
+**Fix**: Already fixed in latest version. Code now sums dict values.
+
+**Verify:**
 ```bash
-# Enable parallel processing
-export MAX_WORKERS=4
-
-# Enable caching
-export CACHE_EMBEDDINGS=true
-
-# Check system resources
-python -c "import psutil; print(psutil.virtual_memory())"
+python -c "
+from src.test_tracking_db import create_test_tracking_db
+db = create_test_tracking_db()
+result = db.cleanup_deleted_files([])
+print('Type:', type(result))
+print('Keys:', list(result.keys()))
+"
 ```
 
-#### Debug Mode
+#### Issue: "No changes detected" but tests are missing
+
+**Cause**: Database is out of sync with codebase
+
+**Fix:**
+```bash
+# Force re-index
+make index --force
+
+# Force database sync
+python -c "
+from src.test_tracking_db import create_test_tracking_db
+from pathlib import Path
+from config.settings import settings
+
+db = create_test_tracking_db()
+db.sync_from_codebase(
+    source_dir=settings.source_code_dir,
+    test_dir=settings.test_output_dir,
+    file_extensions=['.py']
+)
+print('Database synced!')
+"
+
+# Now generate
+make generate
+```
+
+#### Issue: Ollama model preloading fails
+
+**Cause**: Wrong API endpoint for embedding models
+
+**Fix**: Already fixed. Embedding models use `/api/embeddings`, text models use `/api/generate`.
+
+**Verify:**
+```bash
+# Check loaded models
+curl http://localhost:11434/api/ps
+
+# Manually preload
+make ollama-preload
+```
+
+#### Issue: Gemini API not working
+
+**Causes & Fixes:**
+
+1. **Trailing whitespace in .env**
+```bash
+# Remove trailing whitespace
+sed -i '' 's/[[:space:]]*$//' .env
+```
+
+2. **Wrong variable names**
+```bash
+# Should be GOOGLE_API_KEY, not GEMINI_API_KEY
+# Should be GOOGLE_MODEL, not GEMINI_MODEL
+sed -i '' 's/GEMINI_API_KEY/GOOGLE_API_KEY/g' .env
+sed -i '' 's/GEMINI_MODEL/GOOGLE_MODEL/g' .env
+```
+
+3. **Deprecated model name**
+```bash
+# gemini-pro is deprecated, use gemini-1.5-flash
+sed -i '' 's/GOOGLE_MODEL=gemini-pro/GOOGLE_MODEL=gemini-1.5-flash/' .env
+```
+
+#### Issue: High memory usage
+
+**Solutions:**
+
+```bash
+# 1. Use smaller embedding model
+EMBEDDING_MODEL=models/text-embedding-004  # Google's smallest
+
+# 2. Clear ChromaDB cache
+rm -rf chroma_db/
+make index
+
+# 3. Reduce batch size
+export EMBEDDING_BATCH_SIZE=10
+
+# 4. Use cloud embeddings instead of local
+EMBEDDING_PROVIDER=google  # Instead of ollama
+```
+
+### Debug Mode
 
 ```bash
 # Enable debug logging
 export LOG_LEVEL=DEBUG
 
 # Run with verbose output
-python main.py generate-file my_module.py --verbose
+python main.py generate --verbose
 
-# Check system status
+# Check detailed status
 python main.py status --detailed
+
+# Verify database state
+python -c "
+from src.test_tracking_db import create_test_tracking_db
+db = create_test_tracking_db()
+stats = db.get_coverage_stats()
+print(f'Functions: {stats[\"total_functions\"]}')
+print(f'With tests: {stats[\"functions_with_tests\"]}')
+print(f'Coverage: {stats[\"coverage_percentage\"]:.1f}%')
+"
 ```
 
-#### Logs and Diagnostics
+### Logs
 
 ```bash
-# View application logs
+# Application logs
 tail -f observability/logs/app_$(date +%Y-%m-%d).log
 
-# Check metrics database
-python -c "
-from tinydb import TinyDB
-db = TinyDB('observability/metrics.json')
-print(f'Total metrics: {len(db)}')
-"
+# Database queries (if debug enabled)
+grep "SQL:" observability/logs/app_$(date +%Y-%m-%d).log
 
-# View recent traces
-python -c "
-from tinydb import TinyDB
-db = TinyDB('observability/traces.json')
-traces = db.all()[-5:]
-for trace in traces:
-    print(f'Trace {trace[\"trace_id\"]}: {trace[\"span_count\"]} spans')
-"
-```
+# LLM calls
+grep "LLM Call" observability/logs/app_$(date +%Y-%m-%d).log
 
----
-
-## 📚 Examples
-
-### Example 1: Simple Function Test
-
-```python
-# examples/simple_example.py
-from src.test_agent import TestAgent
-
-def calculate_fibonacci(n: int) -> int:
-    """Calculate the nth Fibonacci number."""
-    if n <= 1:
-        return n
-    return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
-
-# Generate tests
-agent = TestAgent()
-tests = agent.generate_tests_for_function(
-    source_code=inspect.getsource(calculate_fibonacci),
-    function_name="calculate_fibonacci"
-)
-
-print(f"Generated {len(tests)} tests")
-print(f"Coverage: {tests.coverage}%")
-print(f"Pass Rate: {tests.pass_rate}%")
-```
-
-### Example 2: API Endpoint Testing
-
-```python
-# examples/api_test_example.py
-from src.test_agent import TestAgent
-
-@app.route('/api/users/<int:user_id>')
-def get_user(user_id: int):
-    """Get user by ID."""
-    if user_id <= 0:
-        raise ValueError("Invalid user ID")
-    user = db.get_user(user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return {"user": user}
-
-# Generate comprehensive API tests
-agent = TestAgent()
-tests = agent.generate_tests_for_function(
-    source_code=inspect.getsource(get_user),
-    function_name="get_user",
-    test_type="api"
-)
-```
-
-### Example 3: Multi-Language Testing
-
-```python
-# examples/multi_language_example.py
-from src.test_agent import TestAgent
-
-# Python function
-def process_data(data: list) -> dict:
-    return {"processed": len(data), "items": data[:10]}
-
-# JavaScript function (ES6)
-const processData = (data) => {
-    return {
-        processed: data.length,
-        items: data.slice(0, 10)
-    };
-};
-
-// TypeScript function
-interface ProcessResult {
-    processed: number;
-    items: any[];
-}
-
-function processData(data: any[]): ProcessResult {
-    return {
-        processed: data.length,
-        items: data.slice(0, 10)
-    };
-}
-
-# Generate tests for all languages
-agent = TestAgent()
-for lang, code in [("python", python_code), ("javascript", js_code), ("typescript", ts_code)]:
-    tests = agent.generate_tests_for_function(
-        source_code=code,
-        language=lang
-    )
-    print(f"{lang}: {tests.coverage}% coverage, {tests.pass_rate}% pass rate")
+# Guardrail events
+grep "Guardrail" observability/logs/app_$(date +%Y-%m-%d).log
 ```
 
 ---
@@ -880,96 +1409,78 @@ for lang, code in [("python", python_code), ("javascript", js_code), ("typescrip
 ### Development Setup
 
 ```bash
-# 1. Fork the repository
-# 2. Clone your fork
+# 1. Fork and clone
 git clone https://github.com/your-username/AgenticTestGenerator.git
 cd AgenticTestGenerator
 
-# 3. Set up development environment
-make dev-setup
+# 2. Install dev dependencies
+make install-dev
 
-# 4. Create feature branch
-git checkout -b feature/amazing-feature
+# 3. Create feature branch
+git checkout -b feature/your-feature
 
-# 5. Make your changes
-# ... code changes ...
+# 4. Make changes
+# ... edit code ...
 
-# 6. Run tests
+# 5. Run tests
 make test
 
-# 7. Run linting and formatting
-make lint
+# 6. Format and lint
 make format
+make lint
 
-# 8. Run evaluation
-python -m src.evals.runner --dataset mixed
+# 7. Commit and push
+git commit -am "Add amazing feature"
+git push origin feature/your-feature
 
-# 9. Commit and push
-git add .
-git commit -m "Add amazing feature"
-git push origin feature/amazing-feature
-
-# 10. Create Pull Request
+# 8. Create Pull Request
 ```
 
 ### Code Standards
 
-- **Type Hints**: All functions must have type annotations
+- **Type hints**: All functions must have type annotations
 - **Docstrings**: Google-style docstrings required
-- **Formatting**: Black for Python code
-- **Linting**: Flake8 for style checking
-- **Testing**: pytest for unit tests
-- **Documentation**: Comprehensive README updates
+- **Formatting**: Black (88 char line length)
+- **Linting**: Flake8 (E, W, F errors only)
+- **Testing**: pytest with ≥90% coverage
+- **Pydantic**: Use Pydantic v2 models for data validation
 
-### Testing Requirements
+### Pull Request Checklist
 
-```bash
-# Run all tests
-make test
-
-# Run with coverage
-make test-coverage
-
-# Run specific test categories
-pytest tests/test_core.py -v
-pytest tests/test_guardrails.py -v
-pytest tests/test_observability.py -v
-```
-
-### Pull Request Process
-
-1. **Feature Branch**: Create from `main` branch
-2. **Testing**: All tests pass, coverage ≥90%
-3. **Documentation**: README and docs updated
-4. **Evaluation**: New features evaluated
-5. **Review**: Code review completed
-6. **Merge**: Squash merge to main
+- [ ] All tests pass (`make test`)
+- [ ] Code is formatted (`make format`)
+- [ ] Linting passes (`make lint`)
+- [ ] Type checking passes (`make mypy`)
+- [ ] Documentation updated (if needed)
+- [ ] Evaluation tests run (if applicable)
+- [ ] PR description explains changes
+- [ ] Branch is up to date with main
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see [LICENSE](LICENSE) for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **LangGraph** for agent orchestration framework
-- **ChromaDB** for vector storage and retrieval
-- **Loguru** for structured logging
-- **Pydantic** for data validation
-- **Ollama** for local LLM inference
-- **OpenAI** and **Google** for cloud LLM APIs
+- **LangChain/LangGraph**: Agent orchestration framework
+- **ChromaDB**: Vector storage and retrieval
+- **Google Gemini**: Fast, affordable LLM inference
+- **Pydantic**: Data validation and settings management
+- **Rich**: Beautiful console output
+- **Loguru**: Structured logging
 
 ---
 
 <div align="center">
 
-**Built with ❤️ for the future of AI-powered software testing**
+**Built with ❤️ for intelligent, automated testing**
 
-[⭐ Star this repo](#) • [🐛 Report issues](#) • [💬 Join discussions](#)
+[⭐ Star this repo](https://github.com/your-username/AgenticTestGenerator) • [🐛 Report issues](https://github.com/your-username/AgenticTestGenerator/issues) • [💬 Discussions](https://github.com/your-username/AgenticTestGenerator/discussions)
 
-**Version 1.0.0** | **Production Ready** | **Enterprise Grade**
+**Version 2.0.0** | **Production Ready** | **Consolidated & Optimized**
 
 </div>

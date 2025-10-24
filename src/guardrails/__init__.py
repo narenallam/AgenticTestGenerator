@@ -67,10 +67,10 @@ from src.guardrails.output_guardrails import (
     create_output_guardrails,
 )
 from src.guardrails.policy_engine import (
-    PolicyConstraints,
+    ToolConstraints,
     PolicyDecision,
     PolicyEngine,
-    PolicyResult,
+    PolicyEvaluationResult as PolicyResult,
     PolicyRule,
     RiskTier,
     create_policy_engine,
@@ -97,7 +97,7 @@ __all__ = [
     "PolicyDecision",
     "PolicyResult",
     "PolicyRule",
-    "PolicyConstraints",
+    "ToolConstraints",
     "RiskTier",
     "create_policy_engine",
     # Schema Validator

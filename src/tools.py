@@ -7,7 +7,7 @@ and execute based on the current state and requirements.
 
 from typing import Any, Dict, List, Optional
 
-from langchain.tools import BaseTool
+from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 
 from src.code_embeddings import CodeEmbeddingStore

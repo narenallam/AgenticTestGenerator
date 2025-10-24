@@ -116,7 +116,7 @@ class Settings(BaseSettings):
     
     # Legacy fields for backward compatibility
     @property
-    def embedding_model(self) -> str:
+    def embedding_model(self) -> str | None:
         """Get embedding model based on current provider."""
         provider_map = {
             "ollama": self.ollama_embedding_model,
@@ -126,7 +126,7 @@ class Settings(BaseSettings):
         return provider_map.get(self.llm_provider, self.ollama_embedding_model)
     
     @property
-    def reranker_model(self) -> str:
+    def reranker_model(self) -> str | None:
         """Get reranker model based on current provider."""
         provider_map = {
             "ollama": self.ollama_reranker_model,
@@ -136,18 +136,48 @@ class Settings(BaseSettings):
         return provider_map.get(self.llm_provider, self.ollama_reranker_model)
     
     # Code Analysis Configuration
-    source_code_dir: Path = Field(
-        default=Path("./src"),
-        description="Source code directory"
+    # NOTE: Both directories MUST be set in .env file - no defaults
+    source_code_dir: Optional[Path] = Field(
+        default=None,
+        description="Source code directory (MUST be set in .env)"
     )
-    test_output_dir: Path = Field(
-        default=Path("./tests/generated"),
-        description="Generated tests output directory"
+    test_output_dir: Optional[Path] = Field(
+        default=None,
+        description="Test output directory (MUST be set in .env)"
     )
     max_context_tokens: int = Field(
         default=8000,
         description="Maximum context tokens for LLM"
     )
+    
+    def __init__(self, **data):
+        """Initialize settings with validation."""
+        super().__init__(**data)
+        
+        # Validate that SOURCE_CODE_DIR is set
+        if self.source_code_dir is None:
+            raise ValueError(
+                "\n❌ SOURCE_CODE_DIR must be set in your .env file!\n"
+                "Example: SOURCE_CODE_DIR=/path/to/your/project/src\n"
+                "This tells the system where to find the code to test.\n"
+            )
+        
+        # Validate that TEST_OUTPUT_DIR is set
+        if self.test_output_dir is None:
+            raise ValueError(
+                "\n❌ TEST_OUTPUT_DIR must be set in your .env file!\n"
+                "Example: TEST_OUTPUT_DIR=/path/to/your/project/tests\n"
+                "This tells the system where to save generated tests.\n"
+            )
+        
+        # Ensure they're Path objects
+        if not isinstance(self.source_code_dir, Path):
+            self.source_code_dir = Path(self.source_code_dir)
+        if not isinstance(self.test_output_dir, Path):
+            self.test_output_dir = Path(self.test_output_dir)
+        
+        # Create test output directory if it doesn't exist
+        self.test_output_dir.mkdir(parents=True, exist_ok=True)
     
     # Agent Configuration
     max_iterations: int = Field(
