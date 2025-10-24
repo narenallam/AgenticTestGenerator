@@ -110,10 +110,10 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/genai-agents"
-Documentation = "https://github.com/yourusername/genai-agents#readme"
-Repository = "https://github.com/yourusername/genai-agents"
-Issues = "https://github.com/yourusername/genai-agents/issues"
+Homepage = "https://github.com/yourusername/AgenticTestGenerator"
+Documentation = "https://github.com/yourusername/AgenticTestGenerator#readme"
+Repository = "https://github.com/yourusername/AgenticTestGenerator"
+Issues = "https://github.com/yourusername/AgenticTestGenerator/issues"
 
 [project.scripts]
 genai-test = "main:main"

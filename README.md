@@ -134,7 +134,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone repository
 git clone <your-repo-url>
-cd genai-agents
+cd AgenticTestGenerator
 
 # Complete setup (installs all dependencies, sets up virtual environment)
 make dev-setup
@@ -148,7 +148,7 @@ source .venv/bin/activate
 ```bash
 # Clone repository
 git clone <your-repo-url>
-cd genai-agents
+cd AgenticTestGenerator
 
 # Create virtual environment
 python -m venv .venv
@@ -882,8 +882,8 @@ for lang, code in [("python", python_code), ("javascript", js_code), ("typescrip
 ```bash
 # 1. Fork the repository
 # 2. Clone your fork
-git clone https://github.com/your-username/genai-agents.git
-cd genai-agents
+git clone https://github.com/your-username/AgenticTestGenerator.git
+cd AgenticTestGenerator
 
 # 3. Set up development environment
 make dev-setup
