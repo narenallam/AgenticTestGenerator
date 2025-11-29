@@ -3,7 +3,7 @@
 Main entry point for the Agentic Unit Test Generator.
 
 This script provides a CLI interface for automated test generation
-using the ReAct agent with RAG-based code retrieval.
+using LangGraph 1.0 orchestrator with RAG-based code retrieval.
 """
 
 import argparse
@@ -19,7 +19,6 @@ from config.settings import settings
 from src.code_embeddings import CodeEmbeddingStore
 from src.git_integration import GitIntegration
 from src.rag_retrieval import RAGRetriever
-from src.test_agent import TestGenerationAgent
 from src.orchestrator import create_test_generation_orchestrator, TestGenerationConfig
 from src.symbol_index import create_symbol_index
 
@@ -72,7 +71,7 @@ def index_codebase(source_dir: Path, force: bool = False) -> None:
 
 
 def generate_tests_for_changes(provider: Optional[str] = None) -> None:
-    """Generate tests for code changes since last commit using LangChain 1.0."""
+    """Generate tests for code changes since last commit using LangGraph 1.0."""
     console.print(Panel.fit(
         "[bold cyan]Generating Tests for Git Changes[/bold cyan]"
     ))
@@ -81,7 +80,7 @@ def generate_tests_for_changes(provider: Optional[str] = None) -> None:
     console.print(f"\n[bold]Configuration[/bold]")
     console.print(f"  Source Directory: [cyan]{settings.source_code_dir}[/cyan]")
     console.print(f"  Test Output Directory: [cyan]{settings.test_output_dir}[/cyan]")
-    console.print(f"  Orchestrator: [cyan]LangChain 1.0[/cyan]")
+    console.print(f"  Orchestrator: [cyan]LangGraph 1.0 (create_react_agent)[/cyan]")
 
     # Initialize components
     from src.llm_providers import get_llm_provider
@@ -90,10 +89,10 @@ def generate_tests_for_changes(provider: Optional[str] = None) -> None:
     git = GitIntegration(repo_path=settings.source_code_dir)
     retriever = RAGRetriever(source_dir=settings.source_code_dir)
 
-    # Use LangChain 1.0 orchestrator
-    console.print(f"\n[green]🚀 Using LangChain 1.0 Orchestrator[/green]")
+    # Use LangGraph 1.0 orchestrator
+    console.print(f"\n[green]🚀 Using LangGraph 1.0 Orchestrator (create_react_agent)[/green]")
 
-    # Create LangChain 1.0 orchestrator with optimal config
+    # Create LangGraph 1.0 orchestrator with optimal config
     config = TestGenerationConfig(
         max_iterations=settings.max_iterations,
         enable_hitl=False,  # Disabled by default
@@ -239,7 +238,7 @@ def generate_tests_for_file(
     console.print(f"\n[bold]Configuration[/bold]")
     console.print(f"  Source Directory: [cyan]{settings.source_code_dir}[/cyan]")
     console.print(f"  Test Output Directory: [cyan]{settings.test_output_dir}[/cyan]")
-    console.print(f"  Orchestrator: [cyan]LangChain 1.0[/cyan]")
+    console.print(f"  Orchestrator: [cyan]LangGraph 1.0 (create_react_agent)[/cyan]")
 
     # Read source code
     source_code = file_path.read_text(encoding='utf-8')
@@ -250,8 +249,8 @@ def generate_tests_for_file(
     llm = get_llm_provider(provider) if provider else None
     retriever = RAGRetriever(source_dir=settings.source_code_dir)
 
-    # Use LangChain 1.0 orchestrator
-    console.print(f"\n[green]🚀 Using LangChain 1.0 Orchestrator[/green]")
+    # Use LangGraph 1.0 orchestrator
+    console.print(f"\n[green]🚀 Using LangGraph 1.0 Orchestrator (create_react_agent)[/green]")
 
     config = TestGenerationConfig(
         max_iterations=settings.max_iterations,
@@ -311,7 +310,7 @@ def show_status() -> None:
     console.print(f"  Source Directory: [cyan]{settings.source_code_dir}[/cyan]")
     console.print(f"  Test Output Directory: [cyan]{settings.test_output_dir}[/cyan]")
     console.print(f"  LLM Provider: [cyan]{settings.llm_provider}[/cyan]")
-    console.print(f"  Orchestrator: [cyan]LangChain 1.0[/cyan]")
+    console.print(f"  Orchestrator: [cyan]LangGraph 1.0 (create_react_agent)[/cyan]")
     
     # Git status
     try:

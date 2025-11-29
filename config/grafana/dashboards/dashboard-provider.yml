@@ -1,0 +1,16 @@
+# Grafana Dashboard Provisioning Config
+
+apiVersion: 1
+
+providers:
+  - name: 'Agentic Test Generator Dashboards'
+    orgId: 1
+    folder: 'AgenticTestGen'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: true
+

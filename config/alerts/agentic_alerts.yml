@@ -1,0 +1,217 @@
+# Alert Rules for AgenticTestGenerator
+# More info: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+
+groups:
+  # ═══════════════════════════════════════════════════════════════════
+  # Test Generation Alerts
+  # ═══════════════════════════════════════════════════════════════════
+  
+  - name: test_generation_alerts
+    interval: 30s
+    rules:
+      # Alert: Low test coverage
+      - alert: LowTestCoverage
+        expr: test_coverage_ratio < 0.80
+        for: 5m
+        labels:
+          severity: warning
+          team: engineering
+          component: test_generation
+        annotations:
+          summary: "Test coverage below 80%"
+          description: "Current coverage: {{ $value | humanizePercentage }}. Target: ≥80%"
+          dashboard: "http://grafana:3000/d/agentic-test-gen"
+          runbook: "https://docs.company.com/runbooks/low-coverage"
+      
+      # Alert: Low pass rate
+      - alert: LowPassRate
+        expr: test_pass_rate_ratio < 0.80
+        for: 5m
+        labels:
+          severity: warning
+          team: engineering
+          component: test_generation
+        annotations:
+          summary: "Test pass rate below 80%"
+          description: "Current pass rate: {{ $value | humanizePercentage }}. Target: ≥80%"
+      
+      # Alert: High error rate
+      - alert: HighTestGenerationErrorRate
+        expr: rate(test_generation_errors_total[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+          team: engineering
+          component: test_generation
+        annotations:
+          summary: "High test generation error rate"
+          description: "Error rate: {{ $value | humanize }} errors/sec. Threshold: 0.1/sec"
+      
+      # Alert: Test generation taking too long
+      - alert: SlowTestGeneration
+        expr: histogram_quantile(0.95, test_generation_duration_seconds_bucket) > 120
+        for: 5m
+        labels:
+          severity: warning
+          team: engineering
+          component: performance
+        annotations:
+          summary: "Test generation p95 latency above 120s"
+          description: "p95 latency: {{ $value | humanizeDuration }}"
+  
+  # ═══════════════════════════════════════════════════════════════════
+  # LLM Performance Alerts
+  # ═══════════════════════════════════════════════════════════════════
+  
+  - name: llm_alerts
+    interval: 30s
+    rules:
+      # Alert: High LLM latency
+      - alert: HighLLMLatency
+        expr: histogram_quantile(0.99, llm_call_duration_seconds_bucket) > 60
+        for: 5m
+        labels:
+          severity: warning
+          team: engineering
+          component: llm
+        annotations:
+          summary: "LLM p99 latency above 60s"
+          description: "p99 latency: {{ $value | humanizeDuration }}. Provider: {{ $labels.provider }}"
+      
+      # Alert: High token usage rate
+      - alert: HighTokenUsageRate
+        expr: rate(llm_tokens_total[5m]) > 10000
+        for: 3m
+        labels:
+          severity: warning
+          team: engineering
+          component: cost
+        annotations:
+          summary: "High token consumption rate"
+          description: "Token rate: {{ $value | humanize }} tokens/sec. Threshold: 10K/sec"
+      
+      # Alert: Budget exceeded
+      - alert: LLMBudgetExceeded
+        expr: llm_cost_total > 100
+        labels:
+          severity: critical
+          team: engineering
+          component: cost
+        annotations:
+          summary: "LLM cost budget exceeded"
+          description: "Current cost: ${{ $value | humanize }}. Budget: $100"
+      
+      # Alert: Daily budget approaching
+      - alert: LLMDailyBudgetWarning
+        expr: increase(llm_cost_total[1d]) > 80
+        labels:
+          severity: warning
+          team: engineering
+          component: cost
+        annotations:
+          summary: "Approaching daily LLM budget"
+          description: "Cost last 24h: ${{ $value | humanize }}. Daily limit: $100"
+  
+  # ═══════════════════════════════════════════════════════════════════
+  # Guardrails & Security Alerts
+  # ═══════════════════════════════════════════════════════════════════
+  
+  - name: security_alerts
+    interval: 30s
+    rules:
+      # Alert: High violation rate
+      - alert: HighGuardrailViolationRate
+        expr: rate(guardrails_violations_total[5m]) > 5
+        for: 2m
+        labels:
+          severity: warning
+          team: security
+          component: guardrails
+        annotations:
+          summary: "High security violation rate"
+          description: "Violation rate: {{ $value | humanize }}/sec. May indicate attack"
+      
+      # Alert: Guardrails blocking everything
+      - alert: GuardrailsOverBlocking
+        expr: rate(guardrails_blocks_total[5m]) / rate(guardrails_checks_total[5m]) > 0.5
+        for: 5m
+        labels:
+          severity: critical
+          team: security
+          component: guardrails
+        annotations:
+          summary: "Guardrails blocking >50% of requests"
+          description: "Block rate: {{ $value | humanizePercentage }}. May be misconfigured"
+      
+      # Alert: Secrets detected
+      - alert: SecretsDetected
+        expr: increase(guardrails_violations_total{type="secrets"}[1h]) > 0
+        labels:
+          severity: critical
+          team: security
+          component: secrets
+        annotations:
+          summary: "Secrets detected in input/output"
+          description: "{{ $value }} secrets detected in last hour. Investigate immediately"
+  
+  # ═══════════════════════════════════════════════════════════════════
+  # System Health Alerts
+  # ═══════════════════════════════════════════════════════════════════
+  
+  - name: system_alerts
+    interval: 30s
+    rules:
+      # Alert: High active sessions
+      - alert: HighActiveSessions
+        expr: active_sessions > 100
+        for: 5m
+        labels:
+          severity: warning
+          team: infrastructure
+          component: capacity
+        annotations:
+          summary: "High number of active sessions"
+          description: "Active sessions: {{ $value }}. May need to scale up"
+      
+      # Alert: Evaluation regression detected
+      - alert: EvaluationRegressionDetected
+        expr: increase(regression_detected[1h]) > 0
+        labels:
+          severity: critical
+          team: engineering
+          component: quality
+        annotations:
+          summary: "Performance regression detected"
+          description: "{{ $value }} regressions detected in {{ $labels.eval_name }}"
+      
+      # Alert: Low eval score
+      - alert: LowEvaluationScore
+        expr: eval_score{eval_name="test_quality"} < 0.70
+        for: 10m
+        labels:
+          severity: warning
+          team: engineering
+          component: quality
+        annotations:
+          summary: "Test quality evaluation below threshold"
+          description: "Score: {{ $value }}. Target: ≥0.70"
+  
+  # ═══════════════════════════════════════════════════════════════════
+  # Agent-Specific Alerts
+  # ═══════════════════════════════════════════════════════════════════
+  
+  - name: agent_alerts
+    interval: 30s
+    rules:
+      # Alert: Agent taking too many iterations
+      - alert: ExcessiveAgentIterations
+        expr: rate(agent_iterations_total[5m]) > 50
+        for: 3m
+        labels:
+          severity: warning
+          team: engineering
+          component: agents
+        annotations:
+          summary: "Agent {{ $labels.agent }} taking excessive iterations"
+          description: "Iteration rate: {{ $value }}/sec. May be stuck in loop"
+

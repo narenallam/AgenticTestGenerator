@@ -4,6 +4,13 @@ Example of generating API tests for FastAPI endpoints.
 
 This demonstrates generating comprehensive API tests including
 status codes, response validation, and error handling.
+
+NOTE: TestGenerationAgent is a compatibility wrapper around LangGraph's
+create_react_agent. For new code, you can use the orchestrator directly:
+
+    from src.orchestrator import create_test_generation_orchestrator
+    orchestrator = create_test_generation_orchestrator()
+    tests = orchestrator.generate_tests(target_code, file_path="api.py")
 """
 
 from src.prompts import TestType
@@ -68,13 +75,14 @@ async def delete_user(user_id: int):
     print("=" * 70)
     print("\nGenerating comprehensive API tests for FastAPI endpoints...\n")
     
-    # Initialize agent with API test type
+    # Initialize agent (uses LangGraph 1.0 orchestrator internally)
     agent = TestGenerationAgent(max_iterations=3)
     
-    # Generate tests
+    # Generate tests (test_type parameter is deprecated but kept for compatibility)
+    print("Using LangGraph create_react_agent for test generation...")
     tests = agent.generate_tests(
         target_code=api_code,
-        test_type=TestType.API
+        test_type=TestType.API  # Deprecated but kept for compatibility
     )
     
     # Display results

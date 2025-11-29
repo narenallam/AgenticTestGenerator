@@ -1,0 +1,42 @@
+# Prometheus Configuration for AgenticTestGenerator
+# More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/
+
+global:
+  scrape_interval: 15s      # How often to scrape targets
+  evaluation_interval: 15s  # How often to evaluate rules
+  scrape_timeout: 10s       # How long until a scrape times out
+  
+  external_labels:
+    monitor: 'agentic-test-generator'
+    environment: 'production'
+    team: 'engineering'
+
+# Alerting configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            # - 'localhost:9093'  # Uncomment when Alertmanager is running
+
+# Rule files for alerting
+rule_files:
+  - '/etc/prometheus/alerts/*.yml'
+
+# Scrape configurations
+scrape_configs:
+  # AgenticTestGenerator application metrics
+  - job_name: 'agentic_test_generator'
+    honor_labels: true
+    static_configs:
+      - targets: ['host.docker.internal:9090']  # For Docker
+        # - targets: ['localhost:9090']  # For local
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 9s
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 30s
+

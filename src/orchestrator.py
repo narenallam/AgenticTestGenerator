@@ -1,8 +1,8 @@
 """
-LangChain 1.0 Orchestrator using latest create_agent API.
+LangGraph Orchestrator using create_react_agent.
 
-This module implements LangChain 1.0 patterns:
-- create_agent from langchain.agents for simplified agent creation
+This module implements LangGraph patterns:
+- create_react_agent from langgraph.prebuilt for simplified agent creation
 - Standard content blocks for cross-provider compatibility
 - Enhanced state management and error handling
 - Production-ready patterns with better maintainability
@@ -221,7 +221,8 @@ class TestGenerationOrchestratorV2:
         This replaces ~200 lines of custom graph building with a simple call,
         providing 66% code reduction while maintaining all functionality.
         
-        Uses langgraph.prebuilt.create_react_agent from LangGraph 1.0.
+        Uses langgraph.prebuilt.create_react_agent.
+        Note: Deprecation warning exists but this is still the recommended production API.
         """
         # System prompt optimized for test generation with structured output
         system_prompt = """You are an expert Python test generation agent with access to powerful tools.

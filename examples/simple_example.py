@@ -4,6 +4,13 @@ Simple example of using the Test Generation Agent.
 
 This example demonstrates basic usage of the agentic test generator
 for a simple Python function.
+
+NOTE: TestGenerationAgent is a compatibility wrapper around LangGraph's
+create_react_agent. For new code, you can use the orchestrator directly:
+
+    from src.orchestrator import create_test_generation_orchestrator
+    orchestrator = create_test_generation_orchestrator()
+    tests = orchestrator.generate_tests(target_code, file_path="example.py")
 """
 
 from src.test_agent import TestGenerationAgent
@@ -44,11 +51,11 @@ def calculate_discount(price: float, discount_percent: float) -> float:
     print(target_code)
     print("\n" + "=" * 70)
     
-    # Initialize agent
+    # Initialize agent (uses LangGraph 1.0 orchestrator internally)
     agent = TestGenerationAgent(max_iterations=3)
     
     # Generate tests
-    print("\nGenerating tests...\n")
+    print("\nGenerating tests (using LangGraph create_react_agent)...\n")
     tests = agent.generate_tests(target_code)
     
     # Display results

@@ -28,6 +28,7 @@
 - [🤖 LLM Providers](#-llm-providers)
 - [🧪 Evaluation System](#-evaluation-system)
 - [📚 Technical Deep Dive](#-technical-deep-dive)
+- [📖 Documentation Library](#-documentation-library)
 - [🔍 Troubleshooting](#-troubleshooting)
 - [🤝 Contributing](#-contributing)
 
@@ -46,6 +47,15 @@ The **Agentic Unit Test Generator** is a sophisticated AI-powered testing platfo
 5. **Context Assembly**: Pre-gathers 9 types of context before LLM calls
 6. **Single Source of Truth**: Unified SQLite database (no JSON files)
 7. **LangChain 1.0**: Built on latest stable LangChain/LangGraph architecture
+
+### 📊 Architecture Highlights
+
+**Why LangGraph?** This project uses LangGraph's `create_react_agent` instead of implementing a custom ReAct loop because it provides:
+- Built-in state management for complex workflows
+- Native tool integration with automatic selection
+- Production-ready error handling and recovery
+- Significant code reduction (66% less code)
+- Better maintainability and future-proofing
 
 ### 📊 Current State (After Consolidation)
 
@@ -130,6 +140,13 @@ Combines three search strategies:
 
 ### System Overview
 
+This project uses **LangGraph 1.0** for agent orchestration via `create_react_agent`. This provides:
+- ✅ Built-in ReAct loop with state management
+- ✅ Native tool integration and selection
+- ✅ Robust error handling and recovery
+- ✅ 66% code reduction vs custom implementation
+- ✅ Production-ready patterns
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     USER INTERFACE                          │
@@ -138,10 +155,10 @@ Combines three search strategies:
                          │
 ┌────────────────────────▼────────────────────────────────────┐
 │                   ORCHESTRATOR LAYER                        │
-│  TestGenerator → Orchestrator (LangGraph 1.0)               │
-│  • Workflow coordination                                    │
-│  • State management                                         │
-│  • Tool selection & execution                               │
+│  LangGraph 1.0 Orchestrator (create_react_agent)            │
+│  • Workflow coordination via LangGraph                      │
+│  • State management (built-in)                              │
+│  • Tool selection & execution (automated)                   │
 └────────────────────────┬────────────────────────────────────┘
                          │
 ┌────────────────────────▼────────────────────────────────────┐
@@ -1404,7 +1421,329 @@ grep "Guardrail" observability/logs/app_$(date +%Y-%m-%d).log
 
 ---
 
-## 🤝 Contributing
+## 📖 Documentation Library
+
+This project includes extensive documentation covering architecture, security, monitoring, and evaluation systems. All documentation is organized in the `docs/` folder.
+
+### 📚 Core Documentation
+
+| Document | Size | Purpose |
+|----------|------|---------|
+| [**ARCHITECTURE.md**](docs/ARCHITECTURE.md) | 56 KB | Complete system architecture, design patterns, and technical decisions |
+| [**DOCUMENTATION_INDEX.md**](docs/DOCUMENTATION_INDEX.md) | 5.6 KB | Master index and navigation guide for all documentation |
+| [**LANGGRAPH_CONSOLIDATION.md**](docs/LANGGRAPH_CONSOLIDATION.md) | 6 KB | LangGraph integration details and consolidation summary |
+
+**Architecture Highlights**:
+- Multi-agent system design (Planner, Coder, Critic)
+- LangGraph 1.0 orchestration with `create_react_agent`
+- RAG pipeline architecture (ChromaDB + reranking)
+- Function-level tracking system (SQLite)
+- Context assembly strategy (9 context types)
+- State management and error recovery
+
+---
+
+### 🛡️ Security & Guardrails
+
+| Document | Size | Purpose |
+|----------|------|---------|
+| [**GUARDRAILS_README.md**](docs/GUARDRAILS_README.md) | 29 KB | Complete enterprise guardrails guide |
+| [**GUARDRAILS_QUICK_REFERENCE.md**](docs/GUARDRAILS_QUICK_REFERENCE.md) | 9 KB | Quick lookup tables, configs, and common violations |
+| [**GUARDRAIL_LIBRARIES_COMPARISON.md**](docs/GUARDRAIL_LIBRARIES_COMPARISON.md) | 22 KB | External library alternatives and recommendations |
+
+**Guardrails Coverage (95%)**:
+
+**Core Components (60%)**:
+- **Policy Engine**: ALLOW/DENY/REVIEW decisions based on risk tiers
+- **Schema Validator**: Parameter validation and auto-correction
+- **Audit Logger**: SOC 2 compliant event logging (SQLite)
+- **HITL Manager**: Human-in-the-loop approval workflows
+
+**Advanced Guards (+35%)**:
+- **Input Guardrails**: PII detection, prompt injection, toxic content filtering
+- **Output Guardrails**: Code safety (eval/exec detection), license compliance
+- **Constitutional AI**: Self-verification loops with principle-based evaluation
+- **Budget Tracker**: Token/cost/time limits with real-time tracking
+- **Secrets Scrubber**: API key leak prevention
+- **File Boundary**: Directory restriction enforcement
+
+**4 Checkpoint Architecture**:
+1. **Checkpoint 1** (`orchestrator.py:349`): Input validation (PII, injection, secrets)
+2. **Checkpoint 2** (`guard_manager.py:153`): Tool authorization (policy, schema, budget, HITL)
+3. **Checkpoint 3** (`orchestrator.py:485`): Output validation (code safety, file boundaries)
+4. **Checkpoint 4** (optional): Constitutional AI self-verification
+
+**Compliance**:
+- ✅ **SOC 2 Type II**: Audit logging, HITL, access control
+- ✅ **GDPR**: PII detection and redaction
+- ✅ **CCPA**: Data minimization, user privacy
+- ⚠️ **HIPAA**: Requires encrypted audit logs (enhancement needed)
+- ✅ **SOX**: Complete audit trails, approval workflows
+- ✅ **PCI-DSS**: Secrets scrubbing, secure data handling
+
+**Enterprise Recommendations**:
+- Use Guardrails AI library for input/output validation (free-$99/mo)
+- Integrate Microsoft Presidio for advanced PII detection (free)
+- Keep custom implementations for policy, HITL, budget, and audit (domain-specific)
+
+---
+
+### 📊 EVALS & Observability
+
+| Document | Size | Purpose |
+|----------|------|---------|
+| [**EVALS_OBSERVABILITY_COMPLETE.md**](docs/EVALS_OBSERVABILITY_COMPLETE.md) | 52 KB | Complete evaluation and monitoring system guide |
+| [**EVALS_EXPLAINED.md**](docs/EVALS_EXPLAINED.md) | 15 KB | EVALS system overview and concepts |
+| [**QUICKSTART_OBSERVABILITY.md**](docs/QUICKSTART_OBSERVABILITY.md) | 4.2 KB | 5-minute quick start for monitoring stack |
+
+**EVALS System (5-Level Framework)**:
+
+1. **UNIT Level**: Function-level testing and micro-benchmarks
+2. **COMPONENT Level**: Test quality evaluation (6 metrics)
+3. **AGENT Level**: Individual agent performance (Planner, Coder, Critic)
+4. **SYSTEM Level**: Safety guardrails and security testing
+5. **BUSINESS Level**: ROI metrics and 90/90 goal achievement
+
+**Test Quality Metrics (6 Dimensions)**:
+- **Correctness** (30% weight): Syntax validity + execution
+- **Coverage** (25% weight): Code coverage via pytest-cov (target: ≥90%)
+- **Completeness** (20% weight): Function coverage + edge cases + error handling
+- **Assertions** (10% weight): Quality and quantity of assertions
+- **Determinism** (10% weight): No random(), time.time(), sleep()
+- **Readability** (5% weight): Naming, comments, structure
+
+**Key Performance Indicators (KPIs)**:
+- **Test Coverage**: ≥90% line coverage
+- **Test Pass Rate**: ≥90% passing tests
+- **Goal Achievement**: Both coverage AND pass rate ≥90%
+- **Test Quality Score**: ≥80% weighted average
+- **Safety Score**: ≥95% guardrail effectiveness
+- **Regression Rate**: <5% evaluation degradation
+
+**Operational Metrics (40+)**:
+```python
+# Test Generation
+test_generation_calls_total          # Counter
+test_coverage_ratio                  # Gauge (target: 0.90)
+test_pass_rate_ratio                 # Gauge (target: 0.90)
+test_quality_score                   # Gauge (target: 0.80)
+
+# LLM Performance
+llm_calls_total                      # Counter (by provider, model)
+llm_tokens_total                     # Counter (input/output)
+llm_cost_total                       # Counter (USD)
+llm_call_duration_seconds            # Histogram (p50, p95, p99)
+
+# Agent Activity
+agent_iterations_total               # Counter (by agent: planner/coder/critic)
+
+# Security
+guardrails_checks_total              # Counter
+guardrails_violations_total          # Counter (by type, severity)
+guardrails_blocks_total              # Counter
+
+# System Health
+eval_score                           # Gauge (by eval_name, level)
+eval_duration_seconds                # Histogram
+regression_detected                  # Counter
+active_sessions                      # Gauge
+```
+
+**Observability Stack**:
+- **Prometheus**: Metrics collection and time-series DB (:9091)
+- **Grafana**: Dashboards and visualization (:3000)
+- **Alertmanager**: Alert routing (Slack, PagerDuty, email) (:9093)
+- **Jaeger**: Distributed tracing (optional) (:16686)
+
+**Pre-configured Alerts (15+)**:
+- LowTestCoverage (<80% for 5m)
+- LowPassRate (<80% for 5m)
+- HighLLMLatency (p99 >60s)
+- LLMBudgetExceeded (>$100)
+- HighGuardrailViolationRate (>5/sec)
+- SecretsDetected (>0/hour) 🚨
+- RegressionDetected (any degradation) 🚨
+
+**External Library Recommendations**:
+
+**Strongly Recommended**:
+1. **OpenTelemetry** - Industry-standard observability (free)
+2. **Jaeger** - Distributed tracing for agent workflows (free)
+3. **Sentry** - Production error tracking (free tier + paid)
+
+**Recommended for Enterprise**:
+4. **DataDog** - All-in-one APM with AI/ML dashboards ($15-31/host/month)
+5. **Evidently AI** - ML observability and data drift detection (free)
+6. **Weights & Biases** - Experiment tracking and model versioning (free tier)
+7. **LangSmith** - LangChain-native LLM debugging ($39/month)
+
+---
+
+### 🚀 Quick Start Guides
+
+**Setup Observability Stack (5 minutes)**:
+```bash
+# 1. Start observability services
+docker-compose up -d
+
+# 2. Start metrics exporter
+python -m src.observability.prometheus_exporter --port 9090
+
+# 3. Run evaluation
+python -m src.evals.runner --dataset mixed
+
+# 4. Access UIs
+open http://localhost:9091  # Prometheus
+open http://localhost:3000  # Grafana (admin/admin123)
+open http://localhost:16686 # Jaeger (tracing)
+
+# 5. Query metrics
+curl http://localhost:9090/metrics | grep test_coverage_ratio
+```
+
+**Run EVALS**:
+```bash
+# Setup: Create default datasets
+python -m src.evals.runner --setup
+
+# Run full evaluation suite
+python -m src.evals.runner --dataset mixed
+
+# Run without regression check
+python -m src.evals.runner --dataset mixed --no-regression-check
+
+# Set baseline for future comparisons
+python -c "
+from src.evals.runner import EvalRunner
+from pathlib import Path
+runner = EvalRunner(Path('evals'))
+runner.set_baseline('test_quality')
+"
+
+# Analyze trends (last 10 runs)
+python -c "
+from src.evals.runner import EvalRunner
+from pathlib import Path
+runner = EvalRunner(Path('evals'))
+trend = runner.analyze_trend('test_quality', window=10)
+print(trend)
+"
+```
+
+**Check Database**:
+```bash
+# View evaluation results
+sqlite3 evals/evals.db "
+SELECT eval_name, score, quality_level, started_at
+FROM eval_results
+ORDER BY started_at DESC
+LIMIT 10;
+"
+
+# Check for regressions
+sqlite3 evals/evals.db "
+SELECT 
+    e1.eval_name,
+    e1.score as current_score,
+    b.baseline_score,
+    (e1.score - b.baseline_score) as delta
+FROM eval_results e1
+JOIN baselines b ON e1.eval_name = b.eval_name
+WHERE (e1.score - b.baseline_score) < -0.05;
+"
+```
+
+---
+
+### 📂 Documentation Organization
+
+```
+docs/
+├── ARCHITECTURE.md                       # 🏗️ System design & patterns
+├── DOCUMENTATION_INDEX.md                # 📚 Master navigation guide
+├── LANGGRAPH_CONSOLIDATION.md            # 🔄 LangGraph integration
+│
+├── GUARDRAILS_README.md                  # 🛡️ Complete security guide
+├── GUARDRAILS_QUICK_REFERENCE.md         # 📋 Quick lookup & configs
+├── GUARDRAIL_LIBRARIES_COMPARISON.md     # 📊 Library alternatives
+│
+├── EVALS_OBSERVABILITY_COMPLETE.md       # 📊 Complete monitoring guide
+├── EVALS_EXPLAINED.md                    # 📖 EVALS concepts
+├── QUICKSTART_OBSERVABILITY.md           # ⚡ 5-min quick start
+│
+└── SUPERVITY_INTERVIEW_QUESTIONS.pdf     # 📄 Technical interviews
+```
+
+---
+
+### 📊 Documentation Statistics
+
+- **Total Documentation**: ~200 KB across 10 documents
+- **Configuration Files**: 6 files (Prometheus, Grafana, Alertmanager)
+- **Docker Compose**: 1 file (4 services: Prometheus, Grafana, Alertmanager, Jaeger)
+- **Alert Rules**: 15+ pre-configured production-ready alerts
+- **Metrics Defined**: 40+ operational metrics (Prometheus-compatible)
+- **KPIs Tracked**: 6 key performance indicators
+- **External Libraries Reviewed**: 7 recommendations with cost analysis
+
+---
+
+### 🎯 Documentation Navigation by Role
+
+**For Developers**:
+1. Start: `README.md` (this file)
+2. Architecture: `docs/ARCHITECTURE.md`
+3. Quick Start: Installation section above
+4. EVALS: `docs/QUICKSTART_OBSERVABILITY.md`
+
+**For Security Engineers**:
+1. Guardrails Overview: `docs/GUARDRAILS_README.md`
+2. Quick Reference: `docs/GUARDRAILS_QUICK_REFERENCE.md`
+3. Compliance Mapping: `docs/GUARDRAILS_README.md` (section)
+4. Library Alternatives: `docs/GUARDRAIL_LIBRARIES_COMPARISON.md`
+
+**For DevOps/SRE**:
+1. Observability: `docs/EVALS_OBSERVABILITY_COMPLETE.md`
+2. Prometheus Setup: `docs/EVALS_OBSERVABILITY_COMPLETE.md` (section)
+3. Grafana Setup: `docs/EVALS_OBSERVABILITY_COMPLETE.md` (section)
+4. Alert Configuration: `config/alerts/agentic_alerts.yml`
+
+**For Data Scientists/ML Engineers**:
+1. EVALS System: `docs/EVALS_EXPLAINED.md`
+2. Metrics & KPIs: `docs/EVALS_OBSERVABILITY_COMPLETE.md` (section)
+3. Experiment Tracking: `docs/EVALS_OBSERVABILITY_COMPLETE.md` (external libraries)
+
+**For Managers/Leadership**:
+1. Overview: `README.md` (Overview section)
+2. Architecture: `docs/ARCHITECTURE.md` (Executive Summary)
+3. ROI Metrics: `docs/EVALS_OBSERVABILITY_COMPLETE.md` (KPIs section)
+4. Compliance: `docs/GUARDRAILS_README.md` (Compliance section)
+
+---
+
+### 🔗 Related Resources
+
+**Configuration**:
+- `config/prometheus/prometheus.yml` - Prometheus configuration
+- `config/grafana/datasources/prometheus.yml` - Grafana datasource
+- `config/alerts/agentic_alerts.yml` - 15+ alert rules
+- `config/alertmanager/alertmanager.yml` - Alert routing (Slack, PagerDuty)
+- `docker-compose.yml` - Full observability stack
+
+**Examples**:
+- `examples/simple_example.py` - Basic test generation
+- `examples/api_test_example.py` - API endpoint testing
+- `examples/provider_comparison.py` - LLM provider comparison
+- `examples/reranking_demo.py` - RAG reranking demonstration
+
+**Source Code**:
+- `src/evals/` - Evaluation system implementation
+- `src/guardrails/` - Security guardrails implementation
+- `src/observability/` - Metrics, logging, tracing
+
+---
+
+## 🔍 Troubleshooting
 
 ### Development Setup
 
@@ -1466,7 +1805,8 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) for 
 
 ## 🙏 Acknowledgments
 
-- **LangChain/LangGraph**: Agent orchestration framework
+- **LangGraph 1.0**: Agent orchestration framework (create_react_agent)
+- **LangChain**: LLM integration and tooling
 - **ChromaDB**: Vector storage and retrieval
 - **Google Gemini**: Fast, affordable LLM inference
 - **Pydantic**: Data validation and settings management

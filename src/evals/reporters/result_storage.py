@@ -38,7 +38,10 @@ class ResultStorage:
     
     def _initialize_db(self) -> None:
         """Create database schema if it doesn't exist."""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
+            # Enable WAL mode for better concurrency
+            conn.execute("PRAGMA journal_mode=WAL")
+            conn.execute("PRAGMA busy_timeout=30000")  # 30 seconds
             cursor = conn.cursor()
             
             # Evaluation results table
@@ -112,7 +115,8 @@ class ResultStorage:
     
     def save_result(self, result: EvalResult) -> None:
         """Save evaluation result to database."""
-        with sqlite3.connect(self.db_path) as conn:
+        # Add timeout to handle concurrent access
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             
             cursor.execute("""
@@ -143,7 +147,7 @@ class ResultStorage:
     
     def save_suite(self, suite: EvalSuite) -> None:
         """Save evaluation suite to database."""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             
             # Save suite
@@ -168,10 +172,34 @@ class ResultStorage:
                 suite.failed_evals,
             ))
             
-            # Save individual results and mappings
+            # Save individual results inline (avoid nested connections)
             for result in suite.eval_results:
-                self.save_result(result)
+                # Save result directly without nested connection
+                cursor.execute("""
+                    INSERT OR REPLACE INTO eval_results (
+                        id, eval_name, eval_level, status,
+                        started_at, completed_at, duration_seconds,
+                        score, quality_level,
+                        metrics, metadata, errors, warnings, recommendations
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    result.eval_id,
+                    result.eval_name,
+                    result.eval_level.value,
+                    result.status.value,
+                    result.started_at,
+                    result.completed_at,
+                    result.duration_seconds,
+                    result.score,
+                    result.quality_level.value if result.quality_level else None,
+                    json.dumps({name: metric.model_dump() for name, metric in result.metrics.items()}),
+                    json.dumps(result.metadata),
+                    json.dumps(result.errors),
+                    json.dumps(result.warnings),
+                    json.dumps(result.recommendations),
+                ))
                 
+                # Save suite-result mapping
                 cursor.execute("""
                     INSERT OR REPLACE INTO suite_results (suite_id, result_id)
                     VALUES (?, ?)
@@ -181,7 +209,7 @@ class ResultStorage:
     
     def get_result(self, eval_id: str) -> Optional[EvalResult]:
         """Retrieve evaluation result by ID."""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             
             cursor.execute("SELECT * FROM eval_results WHERE id = ?", (eval_id,))
@@ -194,7 +222,7 @@ class ResultStorage:
     
     def get_latest_result(self, eval_name: str) -> Optional[EvalResult]:
         """Get the most recent result for an evaluation."""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             
             cursor.execute("""
@@ -217,7 +245,7 @@ class ResultStorage:
         limit: int = 100
     ) -> List[EvalResult]:
         """Get all results for a specific evaluation."""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             
             cursor.execute("""
@@ -233,7 +261,7 @@ class ResultStorage:
     
     def set_baseline(self, eval_name: str, result: EvalResult) -> None:
         """Set baseline for regression detection."""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             
             cursor.execute("""
@@ -253,7 +281,7 @@ class ResultStorage:
     
     def get_baseline(self, eval_name: str) -> Optional[Dict]:
         """Get baseline for an evaluation."""
-        with sqlite3.connect(self.db_path) as conn:
+        with sqlite3.connect(self.db_path, timeout=30.0) as conn:
             cursor = conn.cursor()
             
             cursor.execute("SELECT * FROM baselines WHERE eval_name = ?", (eval_name,))
